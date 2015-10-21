@@ -10,6 +10,14 @@ namespace BugTracker.Models
     // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit http://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
     public class ApplicationUser : IdentityUser
     {
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string DisplayName { get; set; }
+
+        public ApplicationUser()
+        {
+            this.Project = new HashSet<Projects>();
+        }
         public virtual ICollection<Projects> Project { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
@@ -23,6 +31,16 @@ namespace BugTracker.Models
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
+
+        public DbSet<Projects> Projects { get; set; }
+        public DbSet<TicketComments> Comments { get; set; }
+        public DbSet<TicketHistories> Histories { get; set; }
+        public DbSet<TicketNotifications> Notifications { get; set; }
+        public DbSet<TicketPriorities> Priorities { get; set; }
+        public DbSet<Tickets> Tickets { get; set; }
+        public DbSet<TicketStatuses> Statuses { get; set; }
+        public DbSet<TicketTypes> Types { get; set; }
+
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -15,7 +16,9 @@ namespace BugTracker.Models
         }
 
         public int ID { get; set; }
+        [Required]
         public string Title { get; set; }
+        [Required]
         public string Description { get; set; }
         public string MediaURL { get; set; }
         public DateTimeOffset Created { get; set; }
@@ -27,17 +30,17 @@ namespace BugTracker.Models
         public int OwnerID { get; set; }
         public int AssignedToID { get; set; }
 
-
-        public virtual ICollection<TicketComments> Comments { get; set; }
-        public virtual ICollection<TicketHistories> History { get; set}
-        public virtual ICollection<TicketNotifications> Notifications { get; set; }
-
         public virtual Projects Project { get; set; }
         public virtual TicketTypes TicketType { get; set; }
         public virtual TicketPriorities Priority { get; set; }
         public virtual TicketStatuses Status { get; set; }
         public virtual ApplicationUser Owner { get; set; }
         public virtual ApplicationUser AssignedTo { get; set; }
+
+
+        public virtual ICollection<TicketComments> Comments { get; set; }
+        public virtual ICollection<TicketHistories> History { get; set; }
+        public virtual ICollection<TicketNotifications> Notifications { get; set; }
 
     }
 
