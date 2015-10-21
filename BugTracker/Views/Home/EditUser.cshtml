@@ -1,0 +1,12 @@
+﻿@model BugTracker.Models.AdminUserViewModel
+@{
+    ViewBag.Title = "EditUser";
+}
+
+
+
+<form action="@Url.Action("EditUser")" method="post">
+    <select name="selectedRoles" multiple>
+        @(Model.Roles)
+    </select>
+</form>
