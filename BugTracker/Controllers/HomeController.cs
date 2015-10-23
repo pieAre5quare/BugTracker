@@ -2,6 +2,7 @@
 using BugTracker.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -31,8 +32,9 @@ namespace BugTracker.Controllers
             return View();
         }
         //Get
-        public ActionResult EditUser(string id)
+        public ActionResult EditUser(string id = "a06aeeb6-bbaf-4d47-88cb-b49dfd1d9ef4")
         {
+            
             var user = db.Users.Find(id);
             AdminUserViewModel AdminModel = new AdminUserViewModel();
             var selected = id.ListUserRoles();
@@ -43,10 +45,29 @@ namespace BugTracker.Controllers
         }
         // Post
         [HttpPost]
-        public ActionResult EditUser(IEnumerable<string> selectedRoles, int id)
+        public ActionResult EditUser(string[] selectedRoles, AdminUserViewModel model)
         {
-            var user = model.User;
-            var roles = model.
+            var rolesBeforeAdd = model.User.Id.ListUserRoles();
+            foreach(string role in rolesBeforeAdd)
+            {
+                if(!selectedRoles.Contains(role))
+                {
+                    model.User.Id.RemoveUserFromRole(role);
+                }
+            }
+            foreach(string role in selectedRoles)
+            {
+                model.User.Id.AddUserToRole(role);
+            }
+            return RedirectToAction("Index");
         }
+       
+        //get
+        public ActionResult SelectUser()
+        {
+            return View(db.Users.ToList());
+        }
+
+        
     }
 }

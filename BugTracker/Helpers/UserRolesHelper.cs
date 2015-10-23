@@ -31,7 +31,8 @@ namespace BugTracker.Helpers
         {
             var result = manager.RemoveFromRole(userId, roleName);
             return result.Succeeded;
-        }
+        }
+
         public static IList<ApplicationUser> UsersInRole(this string roleName)
         {
             var db = new ApplicationDbContext();
@@ -56,7 +57,8 @@ namespace BugTracker.Helpers
                 }
             }
             return resultList;
-        }
+        }
+
 
     }
 }
