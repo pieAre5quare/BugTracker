@@ -51,20 +51,20 @@ namespace BugTracker.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Title,Description,MediaURL,Created,Updated,ProjectID,TicketTypeID,TicketPrioritiesID,TicketStatusesID,OwnerID,AssignedToID")] Tickets tickets)
+        public ActionResult Create([Bind(Include = "ID,Title,Description,MediaURL,Created,Updated,ProjectID,TicketTypeID,TicketPrioritiesID,TicketStatusesID,OwnerID,AssignedToID")] Tickets ticket)
         {
             if (ModelState.IsValid)
             {
-                db.Tickets.Add(tickets);
+                db.Tickets.Add(ticket);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.TicketPrioritiesID = new SelectList(db.Priorities, "ID", "Name", tickets.TicketPrioritiesID);
-            ViewBag.ProjectID = new SelectList(db.Projects, "ID", "Name", tickets.ProjectID);
-            ViewBag.TicketStatusesID = new SelectList(db.Statuses, "ID", "Name", tickets.TicketStatusesID);
-            ViewBag.TicketTypeID = new SelectList(db.Types, "ID", "Name", tickets.TicketTypeID);
-            return View(tickets);
+            ViewBag.TicketPrioritiesID = new SelectList(db.Priorities, "ID", "Name", ticket.TicketPrioritiesID);
+            ViewBag.ProjectID = new SelectList(db.Projects, "ID", "Name", ticket.ProjectID);
+            ViewBag.TicketStatusesID = new SelectList(db.Statuses, "ID", "Name", ticket.TicketStatusesID);
+            ViewBag.TicketTypeID = new SelectList(db.Types, "ID", "Name", ticket.TicketTypeID);
+            return View(ticket);
         }
 
         // GET: Tickets/Edit/5

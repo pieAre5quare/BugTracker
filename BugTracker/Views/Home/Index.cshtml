@@ -5,119 +5,6 @@
     <!-- Main Container start -->
 <div class="dashboard-container">
     <div class="container">
-        <!-- Top Nav Start -->
-        <div id='cssmenu'>
-            <ul>
-                <li class='active'>
-                    <a href='#'><i class="fa fa-dashboard"></i>Dashboards</a>
-                    <ul>
-                        <li><a href='index.html'>Dashboard</a></li>
-                        <li><a href='index2.html'>Dashboard V2</a></li>
-                        <li><a href='index3.html'>Dashboard V3</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="forms.html">
-                        <i class="fa fa-align-justify"></i>
-                        Forms
-                    </a>
-                </li>
-                <li class=''>
-                    <a href='#'><i class="fa fa-bar-chart-o"></i>Graphs</a>
-                    <ul>
-                        <li><a href='flot.html'>Flot Graphs</a></li>
-                        <li><a href='graphs.html'>Google Graph</a></li>
-                        <li><a href='vector-maps.html'>Vector Maps</a></li>
-                    </ul>
-                </li>
-                <li class=''>
-                    <a href='#'><i class="fa fa-flask"></i>UI Elements</a>
-                    <ul>
-                        <li><a href='ui-elements.html'>UI Elements</a></li>
-                        <li><a href='panels.html'>Panels</a></li>
-                        <li><a href='notifications.html'>Notifications</a></li>
-                        <li><a href='icons.html'>Icons</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href='#'><i class="fa fa-dashboard"></i>Extras</a>
-                    <ul>
-                        <li>
-                            <a href='#'>Blog</a>
-                            <ul>
-                                <li><a href='blog.html'>Blog</a></li>
-                                <li><a href='blog-full-page.html'>Blog Full Page</a></li>
-                            </ul>
-                        </li>
-                        <li><a href='edit-profile.html'>Edit Profile</a></li>
-                        <li><a href='invoice.html'>Invoice</a></li>
-                        <li><a href='default.html'>default</a></li>
-                        <li>
-                            <a href='#'>Submenu</a>
-                            <ul>
-                                <li><a href='#'>Sub Product</a></li>
-                                <li><a href='#'>Sub Product</a></li>
-                                <li><a href='#'>Sub Product</a></li>
-                            </ul>
-                        </li>
-                        <li><a href='login.html'>Login</a></li>
-                        <li><a href='help.html'>Help</a></li>
-                        <li><a href='404.html'>404</a></li>
-                        <li><a href='500.html'>500</a></li>
-                    </ul>
-                </li>
-                <li class=''>
-                    <a href='#'><i class="fa fa-table"></i>Tables</a>
-                    <ul>
-                        <li><a href='tables.html'>Tables</a></li>
-                        <li><a href='pricing.html'>Pricing Plan</a></li>
-                        <li><a href='timeline.html'>Timeline</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="media.html">
-                        <i class="fa fa-picture-o"></i>
-                        Media
-                    </a>
-                </li>
-                <li class="hidden-sm">
-                    <a href="calendar.html">
-                        <i class="fa fa-calendar"></i>
-                        Calendar
-                    </a>
-                </li>
-                @if (User.IsInRole("Admin"))
-                {
-                    <li class="hidden-sm">
-                        <a href="@(Url.Action("EditUser", "Home"))">
-                            <i class="fa fa-font"></i>
-                            Edit User
-                        </a>
-                    </li>
-                }
-            </ul>
-        </div>
-        <!-- Top Nav End -->
-        <!-- Sub Nav End -->
-        <div class="sub-nav hidden-sm hidden-xs">
-            <ul>
-                <li><a href="" class="heading">Dashboard</a></li>
-                <li class="hidden-sm hidden-xs">
-                    <a href="index.html" class="selected">Dashboard V1</a>
-                </li>
-                <li class="hidden-sm hidden-xs">
-                    <a href="index2.html">Dashboard V2</a>
-                </li>
-                <li class="hidden-sm hidden-xs">
-                    <a href="index3.html">Dashboard V3</a>
-                </li>
-            </ul>
-            <div class="custom-search hidden-sm hidden-xs">
-                <input type="text" class="search-query" placeholder="Search here ...">
-                <i class="fa fa-search"></i>
-            </div>
-        </div>
-        <!-- Sub Nav End -->
         <!-- Dashboard Wrapper Start -->
         <div class="dashboard-wrapper">
             <!-- Row Start -->
@@ -126,19 +13,19 @@
                     <div class="widget sales-overview">
                         <div class="widget-header">
                             <div class="title">
-                                Sales Overview<span class="mini-title">Online Sales</span>
+                                Overview
                             </div>
                         </div>
                         <div class="widget-body no-padding">
                             <ul class="nav nav-tabs nav-justified" role="tablist">
                                 <li role="presentation" class="active">
-                                    <a href="#salesOnline" aria-controls="salesOnline" role="tab" data-toggle="tab">
+                                    <a href="#tickets" aria-controls="tickets" role="tab" data-toggle="tab">
                                         <div class="overview-tab clearfix">
                                             <div class="tab-icon">
                                                 <i class="fa fa-laptop"></i>
                                             </div>
                                             <div class="tab-details">
-                                                <p>Total Sales Online</p>
+                                                <p>Tickets</p>
                                                 <h4>5689</h4>
                                                 <p>200% of total</p>
                                             </div>
@@ -189,7 +76,7 @@
                                 </li>
                             </ul>
                             <div class="tab-content">
-                                <div role="tabpanel" class="tab-pane active" id="salesOnline">
+                                <div role="tabpanel" class="tab-pane active" id="tickets">
                                     <div class="row">
                                         <div class="col-md-9 col-sm-9 col-xs-12">
                                             <div id="area-chart3" class="chart-height-lgy"></div>

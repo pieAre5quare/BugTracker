@@ -20,6 +20,68 @@ namespace BugTracker.Migrations
         {
             var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
 
+            // status seeds
+            if (!context.Statuses.Any(s => s.Name == "New"))
+            {
+                TicketStatuses status = new TicketStatuses();
+                status.Name = "New";
+                context.Statuses.Add(status);
+            }
+
+            if (!context.Statuses.Any(s => s.Name == "Open"))
+            {
+                TicketStatuses status = new TicketStatuses();
+                status.Name = "Open";
+                context.Statuses.Add(status);
+            }
+
+            if (!context.Statuses.Any(s => s.Name == "Ready for Testing"))
+            {
+                TicketStatuses status = new TicketStatuses();
+                status.Name = "Ready for Testing";
+                context.Statuses.Add(status);
+            }
+
+            if (!context.Statuses.Any(s => s.Name == "Closed"))
+            {
+                TicketStatuses status = new TicketStatuses();
+                status.Name = "Closed";
+                context.Statuses.Add(status);
+            }
+
+            //Priority seeds
+
+            if (!context.Priorities.Any(p => p.Name == "Low"))
+            {
+                TicketPriorities priority = new TicketPriorities();
+                priority.Name = "Low";
+                context.Priorities.Add(priority);
+            }
+
+            if (!context.Priorities.Any(p => p.Name == "Medium"))
+            {
+                TicketPriorities priority = new TicketPriorities();
+                priority.Name = "Medium";
+                context.Priorities.Add(priority);
+            }
+
+            if (!context.Priorities.Any(p => p.Name == "High"))
+            {
+                TicketPriorities priority = new TicketPriorities();
+                priority.Name = "High";
+                context.Priorities.Add(priority);
+            }
+
+            if (!context.Priorities.Any(p => p.Name == "Critical"))
+            {
+                TicketPriorities priority = new TicketPriorities();
+                priority.Name = "Critical";
+                context.Priorities.Add(priority);
+            }
+
+            // Type seeds
+
+            
 
             //Admin account
             if (!context.Roles.Any(r => r.Name == "Admin"))

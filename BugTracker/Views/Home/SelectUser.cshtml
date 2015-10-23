@@ -3,12 +3,13 @@
     ViewBag.Title = "SelectUser";
 }
 
-<h2>SelectUser</h2>
 
-<ul>
-    @foreach (var user in Model)
-    {
-        <li>@Html.DisplayFor(model => user.DisplayName)</li>
-    }
-</ul>
+<h2>SelectUser</h2>
+    <ul>
+        @foreach (var user in Model)
+        {
+            <li>@Html.DisplayFor(model => user.DisplayName)</li>
+        }
+    </ul>
+
 
