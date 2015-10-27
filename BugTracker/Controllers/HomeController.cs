@@ -20,15 +20,15 @@ namespace BugTracker.Controllers
             if (User.IsInRole("Admin"))
             {
                 homeModel.Projects = db.Projects.ToList();
-                homeModel.Tickets = db.Tickets.Where(t => t.TicketStatusesID == 1);
+                homeModel.Tickets = db.Tickets.Where(t => t.TicketStatusesID == 1).ToList();
                 return View(homeModel);
             }
             else if (User.IsInRole("Project Manager") || User.IsInRole("Developer"))
             {
                 var user = db.Users.Find(User.Identity.GetUserId());
                 homeModel.Projects = user.Project.ToList();
-                homeModel.Tickets = db.Tickets.Where(t => t.AssignedToID.Equals(user));
-                return View();
+                homeModel.Tickets = db.Tickets.Where(t => t.AssignedToID.Equals(user.Id)).ToList();
+                return View(homeModel);
             }
             return View(homeModel);
         }

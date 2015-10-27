@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using BugTracker.Models;
+using BugTracker.Helpers;
 using Microsoft.AspNet.Identity;
 
 namespace BugTracker.Controllers
@@ -91,6 +92,7 @@ namespace BugTracker.Controllers
             ViewBag.ProjectID = new SelectList(db.Projects, "ID", "Name", tickets.ProjectID);
             ViewBag.TicketStatusesID = new SelectList(db.Statuses, "ID", "Name", tickets.TicketStatusesID);
             ViewBag.TicketTypeID = new SelectList(db.Types, "ID", "Name", tickets.TicketTypeID);
+            ViewBag.AssignedToID = new SelectList("Developer".UsersInRole(), "ID", "DisplayName", tickets.AssignedToID);
             return View(tickets);
         }
 

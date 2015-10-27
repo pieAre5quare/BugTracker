@@ -26,7 +26,7 @@
                                                 <i class="fa fa-laptop"></i>
                                             </div>
                                             <div class="tab-details">
-                                                <p>Tickets</p>
+                                                <p>My Tickets</p>
                                                 <h4>5689</h4>
                                                 <p>200% of total</p>
                                             </div>
@@ -78,7 +78,52 @@
                                 <div role="tabpanel" class="tab-pane active" id="tickets">
                                     <div class="row">
                                         <div class="col-md-9 col-sm-9 col-xs-12">
-                                            <div id="area-chart3" class="chart-height-lgy"></div>
+                                            <table class="table">
+                                                <tr>
+                                                    <th>
+                                                        Title
+                                                    </th>
+                                                    <th>
+                                                        Ticket Status
+                                                    </th>
+                                                    <th>
+                                                        Ticket Priority
+                                                    </th>
+                                                    <th>
+                                                        Project
+                                                    </th>
+                                                    
+                                                </tr>
+
+                                                @foreach (var item in Model.Tickets)
+                                                {
+
+                                                    <tr>
+                                                        <td>
+                                                            @Html.DisplayFor(modelItem => item.Title)
+                                                        </td>
+                                                        <td>
+                                                            @Html.DisplayFor(modelItem => item.Status.Name)
+                                                        </td>
+                                                        <td>
+                                                            @Html.DisplayFor(modelItem => item.Priority.Name)
+                                                        </td>
+                                                        <td>
+                                                            @Html.DisplayFor(modelItem => item.Project.Name)
+                                                        </td>
+                                                        
+                                                        @if (User.IsInRole("Admin") || User.IsInRole("Project Manager"))
+                                                        {
+                                                            <td>
+                                                                @Html.ActionLink("Edit", "Edit", "Tickets", new { id = item.ID }, new { }) |
+                                                                @Html.ActionLink("Details", "Details", "Tickets", new { id = item.ID }, new { }) |
+                                                                @Html.ActionLink("Delete", "Delete", "Tickets", new { id = item.ID }, new { })
+                                                            </td>
+                                                        }
+                                                    </tr>
+                                                }
+
+                                            </table>
                                         </div>
                                         <div class="col-md-3 col-sm-3 col-xs-12">
                                             <div id="europe" class="testBar">25</div>
