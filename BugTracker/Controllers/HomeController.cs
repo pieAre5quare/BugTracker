@@ -6,6 +6,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 
 namespace BugTracker.Controllers
 {
@@ -15,7 +16,21 @@ namespace BugTracker.Controllers
 
         public ActionResult Index()
         {
-            return View();
+            var homeModel = new HomeViewModel();
+            if (User.IsInRole("Admin"))
+            {
+                homeModel.Projects = db.Projects.ToList();
+                homeModel.Tickets = db.Tickets.Where(t => t.TicketStatusesID == 1);
+                return View(homeModel);
+            }
+            else if (User.IsInRole("Project Manager") || User.IsInRole("Developer"))
+            {
+                var user = db.Users.Find(User.Identity.GetUserId());
+                homeModel.Projects = user.Project.ToList();
+                homeModel.Tickets = db.Tickets.Where(t => t.AssignedToID.Equals(user));
+                return View();
+            }
+            return View(homeModel);
         }
 
         public ActionResult About()
@@ -32,7 +47,7 @@ namespace BugTracker.Controllers
             return View();
         }
         //Get
-        public ActionResult EditUser(string id = "a06aeeb6-bbaf-4d47-88cb-b49dfd1d9ef4")
+        public ActionResult EditUser(string id)
         {
             
             var user = db.Users.Find(id);

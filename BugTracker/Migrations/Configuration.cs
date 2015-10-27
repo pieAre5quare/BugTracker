@@ -51,6 +51,13 @@ namespace BugTracker.Migrations
 
             //Priority seeds
 
+            if (!context.Priorities.Any(p => p.Name == "To be set"))
+            {
+                TicketPriorities priority = new TicketPriorities();
+                priority.Name = "To be set";
+                context.Priorities.Add(priority);
+            }
+
             if (!context.Priorities.Any(p => p.Name == "Low"))
             {
                 TicketPriorities priority = new TicketPriorities();
@@ -81,7 +88,26 @@ namespace BugTracker.Migrations
 
             // Type seeds
 
-            
+            if (!context.Types.Any(t => t.Name == "User Interface"))
+            {
+                TicketTypes type = new TicketTypes();
+                type.Name = "User Interface";
+                context.Types.Add(type);
+            }
+
+            if (!context.Types.Any(t => t.Name == "Logic Error"))
+            {
+                TicketTypes type = new TicketTypes();
+                type.Name = "Logic Error";
+                context.Types.Add(type);
+            }
+
+            if (!context.Types.Any(t => t.Name == "Database"))
+            {
+                TicketTypes type = new TicketTypes();
+                type.Name = "Database";
+                context.Types.Add(type);
+            }
 
             //Admin account
             if (!context.Roles.Any(r => r.Name == "Admin"))

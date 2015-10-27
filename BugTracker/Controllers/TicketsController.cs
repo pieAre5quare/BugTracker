@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using BugTracker.Models;
+using Microsoft.AspNet.Identity;
 
 namespace BugTracker.Controllers
 {
@@ -55,6 +56,13 @@ namespace BugTracker.Controllers
         {
             if (ModelState.IsValid)
             {
+                ticket.Created = System.DateTimeOffset.Now;
+                ticket.OwnerID = User.Identity.GetUserId();
+                ticket.TicketStatusesID = 1; //Set status to New
+                ticket.Status = db.Statuses.Find(1);
+                ticket.TicketPrioritiesID = 1002; // Set priority as "to be set"
+                ticket.Priority = db.Priorities.Find(1002);
+
                 db.Tickets.Add(ticket);
                 db.SaveChanges();
                 return RedirectToAction("Index");

@@ -9,7 +9,7 @@ namespace BugTracker.Models
     {
         public int ID { get; set; }
         public int TicketID { get; set; }
-        public int NotifiedUserID { get; set; }
+        public string NotifiedUserID { get; set; }
 
         public virtual Tickets Ticket { get; set; }
         public virtual ApplicationUser NotifiedUser { get; set; }

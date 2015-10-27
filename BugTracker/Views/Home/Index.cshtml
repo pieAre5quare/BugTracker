@@ -1,8 +1,9 @@
-﻿@{
+﻿@model BugTracker.Models.HomeViewModel
+@{
     ViewBag.Title = "Home Page";
 }
 
-    <!-- Main Container start -->
+<!-- Main Container start -->
 <div class="dashboard-container">
     <div class="container">
         <!-- Dashboard Wrapper Start -->
@@ -39,9 +40,7 @@
                                                 <i class="fa fa-dollar"></i>
                                             </div>
                                             <div class="tab-details">
-                                                <p>Total Income</p>
-                                                <h4>3124</h4>
-                                                <p>76% of total</p>
+                                                <p>Projects</p>
                                             </div>
                                         </div>
                                     </a>
@@ -92,27 +91,33 @@
                                 <div role="tabpanel" class="tab-pane" id="incomeOnline">
                                     <div class="row">
                                         <div class="col-md-8 col-sm-8 col-xs-12">
-                                            <div id="horizontal-chart" style="width: 100%; height: 210px"></div>
-                                        </div>
-                                        <div class="col-md-4 col-sm-4 col-xs-12">
-                                            <div class="referrals">
-                                                <div class="list info-bg center-align-text">
-                                                    <small class="text-white">Income</small>
-                                                    <h3 class="no-margin no-padding">37%</h3>
-                                                </div>
-                                                <div class="list light-grey-xbg center-align-text">
-                                                    <small class="text-white">Expenses</small>
-                                                    <h3 class="no-margin no-padding text-white">23%</h3>
-                                                </div>
-                                                <div class="list light-grey-xbg center-align-text">
-                                                    <small class="text-white">Salaries</small>
-                                                    <h3 class="no-margin no-padding">15%</h3>
-                                                </div>
-                                                <div class="list warning-bg center-align-text">
-                                                    <small class="text-white">Investments</small>
-                                                    <h3 class="no-margin no-padding">25%</h3>
-                                                </div>
-                                            </div>
+                                            <table class="table">
+                                                <tr>
+                                                    <th>
+                                                        Project Name
+                                                    </th>
+                                                    <th></th>
+                                                </tr>
+
+                                                @foreach (var item in Model.Projects)
+                                                {
+
+                                                    <tr>
+                                                        <td>
+                                                            @Html.DisplayFor(modelItem => item.Name)
+                                                        </td>
+                                                        @if (User.IsInRole("Admin") || User.IsInRole("Project Manager"))
+                                                        {
+                                                            <td>
+                                                                @Html.ActionLink("Edit", "Edit","Projects", new { id = item.ID }, new { }) |
+                                                                @Html.ActionLink("Details", "Details", "Projects", new { id = item.ID }, new { }) |
+                                                                @Html.ActionLink("Delete", "Delete", "Projects", new { id = item.ID }, new { })
+                                                            </td>
+                                                        }
+                                                    </tr>
+                                                }
+
+                                            </table>
                                         </div>
                                     </div>
                                 </div>
@@ -176,355 +181,6 @@
                 </div>
             </div>
             <!-- Row End -->
-            <!-- Row Start -->
-            <div class="row">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <div class="widget">
-                        <div class="widget-header">
-                            <div class="title">
-                                Notifications
-                            </div>
-                        </div>
-                        <div class="widget-body">
-
-                            <!-- Row starts -->
-                            <div class="row">
-                                <div class="col-md-4 col-sm-4 col-xs-12">
-                                    <h4>Status</h4>
-                                    <ul class="imp-status">
-                                        <li class="clearfix">
-                                            <div class="product-status">
-                                                <i class="fa fa-check-circle-o text-success"></i> <span class="label label-success">Delivered</span>
-                                            </div>
-                                            <div class="product-details">
-                                                <h5 class="text-success">Product has been delivered.</h5>
-                                                <p>We are pleased to inform that the following items in your order OD556753 have been delivered.</p>
-                                                <small><i class="fa fa-clock-o"></i>3 mins ago</small>
-                                            </div>
-                                        </li>
-                                        <li class="clearfix">
-                                            <div class="product-status">
-                                                <i class="fa fa-exclamation-circle text-warning"></i> <span class="label label-warning">Returned</span>
-                                            </div>
-                                            <div class="product-details">
-                                                <h5 class="text-warning">Product has been returned.</h5>
-                                                <p>Thank you for shopping!.</p>
-                                                <small><i class="fa fa-clock-o"></i>21 mins ago</small>
-                                            </div>
-                                        </li>
-                                        <li class="clearfix">
-                                            <div class="product-status">
-                                                <i class="fa fa-close text-danger"></i> <span class="label label-danger">Cancelled</span>
-                                            </div>
-                                            <div class="product-details">
-                                                <h5 class="text-danger">Product has been cancelled.</h5>
-                                                <p>We will send you another email once the items.</p>
-                                                <small><i class="fa fa-clock-o"></i>32 mins ago</small>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="col-md-4 col-sm-4 col-xs-12">
-                                    <h4>Posts</h4>
-                                    <ul class="imp-notify">
-                                        <li class="clearfix">
-                                            <div class="icon">
-                                                <img src="img/admin1.png" alt="BlueMoon Admin">
-                                            </div>
-                                            <div class="details">
-                                                <strong class="text-danger">Rogie King <span>Customer Service</span></strong>
-                                                <p>Thanks for your support, on Mozilla and Chrome.</p>
-                                                <small>3 mins ago - (5 comments)</small>
-                                            </div>
-                                        </li>
-                                        <li class="clearfix">
-                                            <div class="icon">
-                                                <img src="img/admin2.png" alt="BlueMoon Admin">
-                                            </div>
-                                            <div class="details">
-                                                <strong class="text-success">Dan Cederholm <span>Maintenance</span></strong>
-                                                <p>Please note the line #21 on Saturday.</p>
-                                                <small>21 mins ago - (12 comments)</small>
-                                            </div>
-                                        </li>
-                                        <li class="clearfix">
-                                            <div class="icon">
-                                                <img src="img/admin3.png" alt="BlueMoon Admin">
-                                            </div>
-                                            <div class="details">
-                                                <strong class="text-info">Justin Mezzell <span>Customer Service</span></strong>
-                                                <p>Could you please give update #2218930, waiting for you respnse.</p>
-                                                <small>2 hrs ago - (27 comments)</small>
-                                            </div>
-                                        </li>
-                                        <li class="clearfix">
-                                            <div class="icon">
-                                                <img src="img/admin4.png" alt="BlueMoon Admin">
-                                            </div>
-                                            <div class="details">
-                                                <strong class="text-info">Justin Mezzell <span>Customer Service</span></strong>
-                                                <p>Could you please give update no #554321</p>
-                                                <small>2 hrs ago - (27 comments)</small>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="col-md-4 col-sm-4 col-xs-12">
-                                    <h4>Tasks</h4>
-                                    <ul class="imp-tasks">
-                                        <li class="clearfix">
-                                            <a href="#">
-                                                <i class="task-status fa fa-download text-danger"></i> <span class="task-type">Inbox</span><span class="label label-danger">9</span>
-                                            </a>
-                                        </li>
-                                        <li class="clearfix">
-                                            <a href="#">
-                                                <i class="task-status fa fa-star text-warning"></i> <span class="task-type">Todo</span><span class="label label-warning">5</span>
-                                            </a>
-                                        </li>
-                                        <li class="clearfix">
-                                            <a href="#">
-                                                <i class="task-status fa fa-arrow-right text-success"></i> <span class="task-type">Working</span><span class="label label-success">2</span>
-                                            </a>
-                                        </li>
-                                        <li class="clearfix">
-                                            <a href="#">
-                                                <i class="task-status fa fa-check text-info"></i> <span class="task-type">Done</span><span class="label label-info">2</span>
-                                            </a>
-                                        </li>
-                                        <li class="clearfix">
-                                            <a href="#">
-                                                <i class="task-status fa fa-exclamation-triangle"></i> <span class="task-type">Hold</span><span class="label label-default">2</span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <!-- Row ends -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Row End -->
-            <!-- Row Start -->
-            <div class="row">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <div class="widget">
-                        <div class="widget-header">
-                            <div class="title">
-                                Products<span class="mini-title">Live Products Stats</span>
-                            </div>
-                        </div>
-                        <div class="widget-body">
-                            <!-- Row starts -->
-                            <div class="row">
-                                <div class="col-md-8 col-sm-12 col-xs-12">
-                                    <table class="table table-bordered no-margin center-align-text">
-                                        <thead>
-                                            <tr>
-                                                <th>&nbsp;</th>
-                                                <th>
-                                                    <h4 class="center-align-text">Testing</h4>
-                                                </th>
-                                                <th>
-                                                    <h4 class="center-align-text">Staging</h4>
-                                                </th>
-                                                <th>
-                                                    <h4 class="center-align-text">Production</h4>
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td class="td-v-align">
-                                                    <h4 class="center-align-text">BlueMooon App</h4>
-                                                </td>
-                                                <td>
-                                                    <h5 class="center-align-text">
-                                                        <strong>1.1.7</strong>
-                                                    </h5>
-                                                    <p>
-                                                        <strong>September 15th 2015</strong>
-                                                    </p>
-                                                    <a href="javascript:void(0)" class="btn btn-success">Success</a>
-                                                </td>
-                                                <td>
-                                                    <h5 class="center-align-text">
-                                                        <strong>1.1.7</strong>
-                                                    </h5>
-                                                    <p>
-                                                        <strong>September 19th 2015</strong>
-                                                    </p>
-                                                    <a href="javascript:void(0)" class="btn btn-success">Success</a>
-                                                </td>
-                                                <td>
-                                                    <h5 class="center-align-text">
-                                                        <strong>1.1.7</strong>
-                                                    </h5>
-                                                    <p>
-                                                        <strong>September 24th 2015</strong>
-                                                    </p>
-                                                    <a href="javascript:void(0)" class="btn btn-success">Success</a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="td-v-align">
-                                                    <h4 class="center-align-text">Bluemoon WebMail</h4>
-                                                </td>
-                                                <td>
-                                                    <h5 class="center-align-text">
-                                                        <strong>2.1.21</strong>
-                                                    </h5>
-                                                    <p>
-                                                        <strong>September 21st 2015</strong>
-                                                    </p>
-                                                    <a href="javascript:void(0)" class="btn btn-success">Success</a>
-                                                </td>
-                                                <td>
-                                                    <h5 class="center-align-text">
-                                                        <strong>2.1.21</strong>
-                                                    </h5>
-                                                    <p>
-                                                        <strong>September 25th 2015</strong>
-                                                    </p>
-                                                    <a href="javascript:void(0)" class="btn btn-warning">Warning</a>
-                                                </td>
-                                                </td>
-                                                <td>
-                                                    <h5 class="center-align-text">
-                                                        <strong>2.1.21</strong>
-                                                    </h5>
-                                                    <p>
-                                                        <strong>September 28th 2015</strong>
-                                                    </p>
-                                                    <a href="javascript:void(0)" class="btn btn-success">Success</a>
-                                                </td>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="td-v-align">
-                                                    <h4 class="center-align-text">Bluemoon Dashboard</h4>
-                                                </td>
-                                                <td>
-                                                    <h5 class="center-align-text">
-                                                        <strong>2.2.32</strong>
-                                                    </h5>
-                                                    <p>
-                                                        <strong>September 11th 2015</strong>
-                                                    </p>
-                                                    <a href="javascript:void(0)" class="btn btn-success">Success</a>
-                                                </td>
-                                                <td>
-                                                    <h5 class="center-align-text">
-                                                        <strong>2.2.32</strong>
-                                                    </h5>
-                                                    <p>
-                                                        <strong>September 15th 2015</strong>
-                                                    </p>
-                                                    <a href="javascript:void(0)" class="btn btn-success">Success</a>
-                                                </td>
-                                                <td>
-                                                    <h5 class="center-align-text">
-                                                        <strong>2.2.32</strong>
-                                                    </h5>
-                                                    <p>
-                                                        <strong>September 18th 2015</strong>
-                                                    </p>
-                                                    <a href="javascript:void(0)" class="btn btn-success">Success</a>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <div class="col-md-4 col-sm-12 col-xs-12">
-                                    <div id="pie-chart" class="chart-height-lgx v-align-graph"></div>
-                                </div>
-                            </div>
-                            <!-- Row ends -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Row End -->
-            <!-- Row starts -->
-            <div class="row">
-                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-                    <div class="widget">
-                        <div class="widget-header">
-                            <div class="title">
-                                Emails
-                            </div>
-                        </div>
-                        <div class="panel-body">
-                            <div class="social-widget">
-                                <div class="social-body">
-                                    <h1>5,126<span>Emails</span></h1>
-                                </div>
-                                <div class="social-footer clearfix">
-                                    <div class="growth">
-                                        <i class="fa fa-arrow-circle-o-down text-danger"></i>
-                                        <h2>10<sup>%</sup></h2>
-                                    </div>
-                                </div>
-                                <p class="social-widget-info">
-                                    More Info about this <strong class="text-info">Emails</strong> lorem ipsum dolor sit amet, consectetur.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-                    <div class="widget">
-                        <div class="widget-header">
-                            <div class="title">
-                                SignUps
-                            </div>
-                        </div>
-                        <div class="panel-body">
-                            <div class="social-widget">
-                                <div class="social-body">
-                                    <span class="full-chart inline-sparkline" id="emails"><canvas width="200" height="70" style="display: inline-block; vertical-align: top; width: 200px; height: 70px;"></canvas></span>
-                                </div>
-                                <div class="social-footer clearfix">
-                                    <div class="growth">
-                                        <i class="fa fa-arrow-circle-o-up text-success"></i>
-                                        <h2>21<sup>%</sup></h2>
-                                    </div>
-                                </div>
-                                <p class="social-widget-info">
-                                    More Info about this <strong class="text-info">SignUps </strong> lorem ipsum dolor sit amet, consectetur.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                    <div class="widget">
-                        <div class="widget-header">
-                            <div class="title">
-                                Visits
-                            </div>
-                        </div>
-                        <div class="panel-body">
-                            <div class="social-widget">
-                                <div class="social-body">
-                                    <h1>989<span>Last Week</span></h1>
-                                </div>
-                                <div class="social-footer clearfix">
-                                    <div class="growth">
-                                        <i class="fa fa-arrow-circle-o-up text-info"></i>
-                                        <h2>49<sup>%</sup></h2>
-                                    </div>
-                                </div>
-                                <p class="social-widget-info">
-                                    More Info about this <strong class="text-info">% Visits</strong> lorem ipsum dolor sit amet, consectetur.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Row ends -->
         </div>
         <!-- Dashboard Wrapper End -->
         <footer>

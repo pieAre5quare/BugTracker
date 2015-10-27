@@ -27,8 +27,8 @@ namespace BugTracker.Models
         public int TicketTypeID { get; set; }
         public int TicketPrioritiesID { get; set; }
         public int TicketStatusesID { get; set; }
-        public int OwnerID { get; set; }
-        public int AssignedToID { get; set; }
+        public string OwnerID { get; set; }
+        public string AssignedToID { get; set; }
 
         public virtual Projects Project { get; set; }
         public virtual TicketTypes TicketType { get; set; }
