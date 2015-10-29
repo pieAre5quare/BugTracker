@@ -21,15 +21,24 @@ namespace BugTracker.Controllers
             {
                 homeModel.Projects = db.Projects.ToList();
                 homeModel.Tickets = db.Tickets.Where(t => t.TicketStatusesID == 1).ToList();
-                return View(homeModel);
+            } else if (User.IsInRole("Project Manager"))
+            {
+                var user = db.Users.Find(User.Identity.GetUserId());
+                homeModel.Tickets = user.Project.SelectMany(p => p.Tickets).ToList();
+                homeModel.Projects = user.Project.ToList();
             }
-            else if (User.IsInRole("Project Manager") || User.IsInRole("Developer"))
+            else if (User.IsInRole("Developer"))
             {
                 var user = db.Users.Find(User.Identity.GetUserId());
                 homeModel.Projects = user.Project.ToList();
                 homeModel.Tickets = db.Tickets.Where(t => t.AssignedToID.Equals(user.Id)).ToList();
-                return View(homeModel);
+                homeModel.DevProjectTickets = user.Project.SelectMany(p => p.Tickets).ToList();
+            } else if (User.IsInRole("Submitter"))
+            {
+                var user = db.Users.Find(User.Identity.GetUserId());
+                homeModel.Tickets = db.Tickets.Where(t => t.OwnerID.Equals(user.Id)).ToList();
             }
+
             return View(homeModel);
         }
 
