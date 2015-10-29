@@ -150,5 +150,21 @@ namespace BugTracker.Controllers
             }
             base.Dispose(disposing);
         }
+
+        [Authorize]
+        [ValidateAntiForgeryToken]
+        [HttpPost]
+        public ActionResult AddComment(TicketComments newComment)
+        {
+            var ticket = db.Tickets.Find(newComment.TicketID);
+            if (ModelState.IsValid)
+            {
+                newComment.Created = System.DateTimeOffset.Now;
+                newComment.AuthorID = User.Identity.GetUserId();
+                db.Comments.Add(newComment);
+                db.SaveChanges();
+            }
+            return RedirectToAction("Details", "Tickets", new { id = ticket.ID });
+        }
     }
 }

@@ -100,6 +100,40 @@
 
     </dl>
 </div>
+<div class="well">
+    <h4>Leave a Comment:</h4>
+    @using (Html.BeginForm("AddComment", "Tickets"))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <input type="hidden" name="TicketID" value="@Model.ID" />
+        <div class="form-group">
+            <textarea class="form-control" name="Body" rows="3"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    }
+</div>
+@foreach (var comment in Model.Comments)
+{
+                    <!-- Comment -->
+    <div class="media">
+        <div class="media-body">
+            <h4 class="media-heading">
+                @comment.Author.DisplayName
+                <small>@comment.Created</small>
+            </h4>
+            @comment.Body
+        </div>
+        @*<div>
+            @if (User.IsInRole("Admin") || User.IsInRole("Moderator"))
+            {
+
+                <a href="" data-toggle="modal" data-target="#delete-modal" class="btn btn-primary del" data-comment-id="@comment.ID">Delete</a>
+                                    <a href="" data-toggle="modal" data-target="#edit-modal" class="btn btn-primary edit" data-comment-id="@comment.ID" data-comment-body="@comment.Body">Edit</a>
+            }
+        </div>*@
+    </div>
+}
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
     @Html.ActionLink("Back to List", "Index")
