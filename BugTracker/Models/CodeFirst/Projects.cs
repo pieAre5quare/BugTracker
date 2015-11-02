@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -12,6 +13,7 @@ namespace BugTracker.Models
             this.ProjectMembers = new HashSet<ApplicationUser>();
         }
         public int ID { get; set; }
+        [Required]
         public string Name { get; set; }
 
         public virtual ICollection<ApplicationUser> ProjectMembers { get; set; }

@@ -13,16 +13,16 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Priority.Name)
+                Priority
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Project.Name)
+                Project
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Status.Name)
+                Status
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.TicketType.Name)
+                Type
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Title)
@@ -31,19 +31,16 @@
                 @Html.DisplayNameFor(model => model.Description)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.MediaURL)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.Created)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Updated)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.OwnerID)
+                @Html.DisplayNameFor(model => model.Owner)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.AssignedToID)
+                @Html.DisplayNameFor(model => model.AssignedTo)
             </th>
             <th></th>
         </tr>
@@ -71,19 +68,16 @@
                     @Html.DisplayFor(modelItem => item.Description)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.MediaURL)
-                </td>
-                <td>
                     @Html.DisplayFor(modelItem => item.Created)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Updated)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.OwnerID)
+                    @Html.DisplayFor(modelItem => item.Owner.DisplayName)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.AssignedToID)
+                    @Html.DisplayFor(modelItem => item.AssignedTo.DisplayName)
                 </td>
                 <td>
                         @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |

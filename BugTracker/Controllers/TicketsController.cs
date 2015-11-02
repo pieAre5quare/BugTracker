@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using BugTracker.Models;
 using BugTracker.Helpers;
 using Microsoft.AspNet.Identity;
+using System.IO;
 
 namespace BugTracker.Controllers
 {
@@ -30,12 +31,19 @@ namespace BugTracker.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Tickets tickets = db.Tickets.Find(id);
-            if (tickets == null)
+            var model = new DetailsViewModel();
+            model.ThisTicket = db.Tickets.Find(id);
+            var user = db.Users.Find(User.Identity.GetUserId());
+            model.IsAssignedUser = model.ThisTicket.AssignedToID == user.Id;
+            var userProjects = user.Project;
+            model.IsUserOnTicketProject = user.Id.IsOnProject(model.ThisTicket.ProjectID);
+            model.IsUserOwner = model.ThisTicket.OwnerID == user.Id;
+            if (model.ThisTicket == null)
             {
                 return HttpNotFound();
             }
-            return View(tickets);
+            
+            return View(model);
         }
 
         // GET: Tickets/Create
@@ -53,10 +61,27 @@ namespace BugTracker.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Title,Description,MediaURL,Created,Updated,ProjectID,TicketTypeID,TicketPrioritiesID,TicketStatusesID,OwnerID,AssignedToID")] Tickets ticket)
+        public ActionResult Create([Bind(Include = "ID,Title,Description,MediaURL,Created,Updated,ProjectID,TicketTypeID,TicketPrioritiesID,TicketStatusesID,OwnerID,AssignedToID")] Tickets ticket, HttpPostedFileBase image)
         {
+            if (image != null && image.ContentLength > 0)
+            {
+                var ext = Path.GetExtension(image.FileName).ToLower();
+                if (ext != ".png" && ext != ".jpg" && ext != ".jpeg" && ext != ".gif" && ext != ".bmp")
+                {
+                    ModelState.AddModelError("image", "Invalid Format");
+                }
+            }
             if (ModelState.IsValid)
             {
+                if (image != null)
+                {
+                    var filePath = "/Uploads/";
+                    var absPath = Server.MapPath("~" + filePath);
+                    ticket.MediaURL = filePath + image.FileName;
+                    Directory.CreateDirectory(absPath);
+                    image.SaveAs(Path.Combine(absPath, image.FileName));
+                }
+
                 ticket.Created = System.DateTimeOffset.Now;
                 ticket.OwnerID = User.Identity.GetUserId();
                 ticket.TicketStatusesID = 1; //Set status to New
@@ -154,11 +179,27 @@ namespace BugTracker.Controllers
         [Authorize]
         [ValidateAntiForgeryToken]
         [HttpPost]
-        public ActionResult AddComment(TicketComments newComment)
+        public ActionResult AddComment(TicketComments newComment, HttpPostedFileBase image)
         {
             var ticket = db.Tickets.Find(newComment.TicketID);
+            if (image != null && image.ContentLength > 0)
+            {
+                var ext = Path.GetExtension(image.FileName).ToLower();
+                if (ext != ".png" && ext != ".jpg" && ext != ".jpeg" && ext != ".gif" && ext != ".bmp")
+                {
+                    ModelState.AddModelError("image", "Invalid Format");
+                }
+            }
             if (ModelState.IsValid)
             {
+                if (image != null)
+                {
+                    var filePath = "/Uploads/";
+                    var absPath = Server.MapPath("~" + filePath);
+                    newComment.MediaURL = filePath + image.FileName;
+                    Directory.CreateDirectory(absPath);
+                    image.SaveAs(Path.Combine(absPath, image.FileName));
+                }
                 newComment.Created = System.DateTimeOffset.Now;
                 newComment.AuthorID = User.Identity.GetUserId();
                 db.Comments.Add(newComment);

@@ -21,7 +21,9 @@ namespace BugTracker.Models
         [Required]
         public string Description { get; set; }
         public string MediaURL { get; set; }
+        [DisplayFormat(DataFormatString = "{0:MMM dd yyyy hh:mm tt}")]
         public DateTimeOffset Created { get; set; }
+        [DisplayFormat(DataFormatString = "{0:MMM dd yyyy hh:mm tt}")]
         public DateTimeOffset? Updated { get; set; }
         public int ProjectID { get; set; }
         public int TicketTypeID { get; set; }

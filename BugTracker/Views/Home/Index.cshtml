@@ -137,22 +137,25 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    @foreach (var item in Model.Projects)
+                                                    @if (Model.Projects != null)
                                                     {
+                                                        foreach (var item in Model.Projects)
+                                                        {
 
-                                                        <tr>
-                                                            <td>
-                                                                @Html.DisplayFor(modelItem => item.Name)
-                                                            </td>
-                                                            @if (User.IsInRole("Admin") || User.IsInRole("Project Manager"))
-                                                            {
+                                                            <tr>
                                                                 <td>
-                                                                    @Html.ActionLink("Edit", "Edit", "Projects", new { id = item.ID }, new { }) |
-                                                                    @Html.ActionLink("Details", "Details", "Projects", new { id = item.ID }, new { }) |
-                                                                    @Html.ActionLink("Delete", "Delete", "Projects", new { id = item.ID }, new { })
+                                                                    @Html.DisplayFor(modelItem => item.Name)
                                                                 </td>
-                                                            }
-                                                        </tr>
+                                                                @if (User.IsInRole("Admin") || User.IsInRole("Project Manager"))
+                                                                {
+                                                                    <td>
+                                                                        @Html.ActionLink("Edit", "Edit", "Projects", new { id = item.ID }, new { }) |
+                                                                        @Html.ActionLink("Details", "Details", "Projects", new { id = item.ID }, new { }) |
+                                                                        @Html.ActionLink("Delete", "Delete", "Projects", new { id = item.ID }, new { })
+                                                                    </td>
+                                                                }
+                                                            </tr>
+                                                        }
                                                     }
                                                 </tbody>
                                             </table>
@@ -182,8 +185,10 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    @foreach (var item in Model.DevProjectTickets)
+                                                    @if (Model.DevProjectTickets != null)
                                                     {
+                                                        foreach (var item in Model.DevProjectTickets)
+                                                        {
                                                         <tr>
                                                             <td>
                                                                 @Html.DisplayFor(modelItem => item.Title)
@@ -198,6 +203,7 @@
                                                                 @Html.DisplayFor(modelItem => item.Project.Name)
                                                             </td>
                                                         </tr>
+                                                        }
                                                     }
                                                 </tbody>
                                             </table>

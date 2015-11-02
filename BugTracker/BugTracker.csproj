@@ -189,6 +189,7 @@
     <Compile Include="Models\CodeFirst\TicketNotifications.cs" />
     <Compile Include="Models\CodeFirst\TicketStatuses.cs" />
     <Compile Include="Models\CodeFirst\TicketTypes.cs" />
+    <Compile Include="Models\DetailsViewModel.cs" />
     <Compile Include="Models\HomeViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -300,6 +301,7 @@
     <Content Include="Content\DataTables-1.10.9\media\images\sort_desc.png" />
     <Content Include="Content\DataTables-1.10.9\media\images\sort_desc_disabled.png" />
     <Content Include="Content\datepicker.css" />
+    <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\fullcalendar.css" />
     <Content Include="Content\new.css" />
     <Content Include="Content\pricing.css" />
@@ -427,7 +429,9 @@
     <Content Include="Scripts\sparkline.js" />
     <Content Include="Scripts\tiny-scrollbar.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -447,7 +451,7 @@
     <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
     <Content Include="Views\Account\ForgotPassword.cshtml" />
     <Content Include="Views\Account\ForgotPasswordConfirmation.cshtml" />
-    <Content Include="Views\Account\OldLogin.cshtml" />
+    <Content Include="Views\Account\OldOldLogin.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Account\ResetPassword.cshtml" />
     <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
@@ -462,7 +466,7 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Home\EditUser.cshtml" />
-    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Account\OldLogin.cshtml" />
     <Content Include="Views\Home\SelectUser.cshtml" />
     <Content Include="Views\Home\CreateProject.cshtml" />
     <Content Include="Views\Home\EditProject.cshtml" />
@@ -476,9 +480,11 @@
     <Content Include="Views\Tickets\Details.cshtml" />
     <Content Include="Views\Tickets\Edit.cshtml" />
     <Content Include="Views\Tickets\Index.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Uploads\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

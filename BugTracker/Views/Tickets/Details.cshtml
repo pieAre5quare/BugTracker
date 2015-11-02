@@ -1,4 +1,4 @@
-﻿@model BugTracker.Models.Tickets
+﻿@model BugTracker.Models.DetailsViewModel
 
 @{
     ViewBag.Title = "Details";
@@ -7,114 +7,152 @@
 <h2>Details</h2>
 
 <div>
-    <h4>Tickets</h4>
+    <h4>@Html.DisplayFor(model => model.ThisTicket.Title)</h4>
     <hr />
-    <dl class="dl-horizontal">
+
+    <div  class="row">
+        <div class="col-md-12">
+            <p>Priority: @Html.DisplayFor(model => model.ThisTicket.Priority.Name)</p>
+            <p>Project: @Html.DisplayFor(model => model.ThisTicket.Project.Name)</p>
+            <p>Status: @Html.DisplayFor(model => model.ThisTicket.Status.Name)</p>
+            <p>Created: @Html.DisplayFor(model => model.ThisTicket.Created)</p>
+            @if (Model.ThisTicket.Updated != null)
+            {
+                <p>
+                    Updated: @Html.DisplayFor(model => model.ThisTicket.Updated)
+                </p>
+            }
+            <p>Issue Type: @Html.DisplayFor(model => model.ThisTicket.TicketType.Name)</p>
+            <p>Description: @Html.DisplayFor(model => model.ThisTicket.Description)</p>
+            <p>Owner: @Html.DisplayFor(model => model.ThisTicket.Owner.DisplayName)</p>
+            <p>Assigned To: @Html.DisplayFor(model => model.ThisTicket.AssignedTo.DisplayName)</p>
+            @if (Model.ThisTicket.MediaURL != null)
+            {
+                
+                    <img class="img-responsive" src="@Model.ThisTicket.MediaURL" alt="" />
+                    <hr />
+              
+            }
+
+        </div>
+    </div>
+    @*<dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Priority.Name)
+            @Html.DisplayNameFor(model => model.ThisTicket.Priority.Name)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Priority.Name)
+            @Html.DisplayFor(model => model.ThisTicket.Priority.Name)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Project.Name)
+            @Html.DisplayNameFor(model => model.ThisTicket.Project.Name)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Project.Name)
+            @Html.DisplayFor(model => model.ThisTicket.Project.Name)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Status.Name)
+            @Html.DisplayNameFor(model => model.ThisTicket.Status.Name)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Status.Name)
+            @Html.DisplayFor(model => model.ThisTicket.Status.Name)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.TicketType.Name)
+            @Html.DisplayNameFor(model => model.ThisTicket.TicketType.Name)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.TicketType.Name)
+            @Html.DisplayFor(model => model.ThisTicket.TicketType.Name)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Title)
+            @Html.DisplayNameFor(model => model.ThisTicket.Title)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Title)
+            @Html.DisplayFor(model => model.ThisTicket.Title)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Description)
+            @Html.DisplayNameFor(model => model.ThisTicket.Description)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Description)
+            @Html.DisplayFor(model => model.ThisTicket.Description)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.MediaURL)
+            @Html.DisplayNameFor(model => model.ThisTicket.MediaURL)
+        </dt>
+
+        @if (Model.ThisTicket.MediaURL != null)
+        {
+            <dd>
+                <img class="img-responsive" src="@Model.ThisTicket.MediaURL" alt="" />
+                <hr />
+            </dd>
+        }
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ThisTicket.Created)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.MediaURL)
+            @Html.DisplayFor(model => model.ThisTicket.Created)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Created)
+            @Html.DisplayNameFor(model => model.ThisTicket.Updated)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Created)
+            @Html.DisplayFor(model => model.ThisTicket.Updated)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Updated)
+            @Html.DisplayNameFor(model => model.ThisTicket.OwnerID)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Updated)
+            @Html.DisplayFor(model => model.ThisTicket.OwnerID)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.OwnerID)
+            @Html.DisplayNameFor(model => model.ThisTicket.AssignedToID)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.OwnerID)
+            @Html.DisplayFor(model => model.ThisTicket.AssignedToID)
         </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.AssignedToID)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.AssignedToID)
-        </dd>
-
-    </dl>
+    </dl>*@
 </div>
 <div class="well">
     <h4>Leave a Comment:</h4>
-    @using (Html.BeginForm("AddComment", "Tickets"))
-    {
+    <form action="@Url.Action("AddComment", "Tickets")" method="post" enctype="multipart/form-data">
         @Html.AntiForgeryToken()
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <input type="hidden" name="TicketID" value="@Model.ID" />
+        <input type="hidden" name="TicketID" value="@Model.ThisTicket.ID" />
         <div class="form-group">
             <textarea class="form-control" name="Body" rows="3"></textarea>
+            <div class="col-md-10">
+                <input name="image" type="file" class="form-control" id="fileUpload" />
+            </div>
         </div>
+        @if (User.IsInRole("Admin") || User.IsInRole("Project Manager") && Model.IsUserOnTicketProject
+            || User.IsInRole("Developer") && Model.IsAssignedUser || User.IsInRole("Submitter") && Model.IsUserOwner)
+        {
+
         <button type="submit" class="btn btn-primary">Submit</button>
-    }
+        }
+    </form>
 </div>
-@foreach (var comment in Model.Comments)
-{
+@foreach (var comment in Model.ThisTicket.Comments)
+            {
                     <!-- Comment -->
     <div class="media">
         <div class="media-body">
@@ -123,6 +161,13 @@
                 <small>@comment.Created</small>
             </h4>
             @comment.Body
+            <div>
+                @if (Model.ThisTicket.MediaURL != null)
+            {
+                    <img class="img-responsive" src="@comment.MediaURL" alt="" />
+                                <hr />
+                }
+            </div>
         </div>
         @*<div>
             @if (User.IsInRole("Admin") || User.IsInRole("Moderator"))
@@ -135,6 +180,6 @@
     </div>
 }
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ThisTicket.ID }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
