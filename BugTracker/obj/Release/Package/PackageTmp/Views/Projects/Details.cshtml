@@ -14,8 +14,16 @@
             @Html.DisplayNameFor(model => model.Name)
         </dt>
 
+        <dt>
+            Open Tickets
+        </dt>
+
         <dd>
             @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tickets.Where(t => t.TicketStatusesID == 2)) 
         </dd>
 
     </dl>

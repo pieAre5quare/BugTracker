@@ -27,8 +27,8 @@
                                             </div>
                                             <div class="tab-details">
                                                 <p>My Tickets</p>
-                                                <h4>5689</h4>
-                                                <p>200% of total</p>
+                                                <h4>@Model.Tickets.Count()</h4>
+                                                @*<p>200% of total</p>*@
                                             </div>
                                         </div>
                                     </a>
@@ -59,8 +59,8 @@
                                             </div>
                                             <div class="tab-details">
                                                 <p>Project Tickets</p>
-                                                <h4>112</h4>
-                                                <p>7% of total</p>
+                                                <h4>@Model.DevProjectTickets.Count()</h4>
+                                                @*<p>7% of total</p>*@
                                             </div>
                                         </div>
                                     </a>

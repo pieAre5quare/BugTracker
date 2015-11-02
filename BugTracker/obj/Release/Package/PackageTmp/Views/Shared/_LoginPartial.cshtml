@@ -3,32 +3,33 @@
 {
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
     {
-    @Html.AntiForgeryToken()
+        @Html.AntiForgeryToken()
+        
+            <div>
+                @*<i class="fa fa-picture-o"></i>*@
+                <a href="@Url.Action("Index","Manage")" title="Manage">@User.Identity.GetUserName()</a>
+                @*@Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })*@
+                @*<i class="fa fa-picture-o"></i>*@
+                <a href="javascript:document.getElementById('logoutForm').submit()">Log off</a>
+            </div>
+        
 
-    
-        <li>
-            @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
-        </li>
-        <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
-   
     }
 }
 else
 {
-    
-        <li>
-            <a href="@Url.Action("Register", "Account")"  id = "registerLink">
+
+    <div class="row navbar-right">
+        <div>
+            <a href="@Url.Action("Register", "Account")" id="registerLink">
                 <i class="fa fa-picture-o"></i>
                 Register
             </a>
-        </li>
-        <li>
-            <i class="fa fa-picture-o"></i>
-            <a href="@Url.Action("Login", "Account")" id = "loginlink">
+            <a href="@Url.Action("Login", "Account")" id="loginlink">
                 <i class="fa fa-picture-o"></i>
                 Log in
             </a>
-            
-        </li>
-    
+        </div>
+    </div>
+
 }

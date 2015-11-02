@@ -23,6 +23,7 @@
     <link href="~/Content/theme.css" rel="stylesheet" />
     <link href="~/Content/timepicker.css" rel="stylesheet" />
     <link href="~/Content/DataTables-1.10.9/media/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="~/Content/overwrite.css" rel="stylesheet" />
 </head>
 <body>
     <!-- Top Nav Start -->
@@ -55,17 +56,21 @@
                     All Tickets
                 </a>
             </li>
-            @Html.Partial("_LoginPartial")
+            
         </ul>
     </div>
     <!-- Top Nav End -->
     <!-- Sub Nav End -->
-    <div class="sub-nav hidden-sm hidden-xs">
+    @*<div class="sub-nav hidden-sm hidden-xs">
         
         <div class="custom-search hidden-sm hidden-xs">
             <input type="text" class="search-query" placeholder="Search here ...">
             <i class="fa fa-search"></i>
         </div>
+    </div>*@
+
+    <div class="sub-nav">
+        @Html.Partial("_LoginPartial")
     </div>
         
     <!-- Sub Nav End -->
