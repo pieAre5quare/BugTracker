@@ -4,132 +4,72 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+
 
 <div>
-    <h4>@Html.DisplayFor(model => model.ThisTicket.Title)</h4>
+
+    <h2>@Html.DisplayFor(model => model.ThisTicket.Title)</h2>
+    <p>Created: @Html.DisplayFor(model => model.ThisTicket.Created)<p>
+        @if (Model.ThisTicket.Updated != null)
+        {
+            
+            <p>Updated: @Html.DisplayFor(model => model.ThisTicket.Updated)</p>
+        }
+        <p>Author: @Html.DisplayFor(model => model.ThisTicket.Owner.DisplayName)</p>
+    
     <hr />
 
     <div  class="row">
-        <div class="col-md-12">
-            <p>Priority: @Html.DisplayFor(model => model.ThisTicket.Priority.Name)</p>
-            <p>Project: @Html.DisplayFor(model => model.ThisTicket.Project.Name)</p>
-            <p>Status: @Html.DisplayFor(model => model.ThisTicket.Status.Name)</p>
-            <p>Created: @Html.DisplayFor(model => model.ThisTicket.Created)</p>
-            @if (Model.ThisTicket.Updated != null)
-            {
-                <p>
-                    Updated: @Html.DisplayFor(model => model.ThisTicket.Updated)
-                </p>
-            }
-            <p>Issue Type: @Html.DisplayFor(model => model.ThisTicket.TicketType.Name)</p>
-            <p>Description: @Html.DisplayFor(model => model.ThisTicket.Description)</p>
-            <p>Owner: @Html.DisplayFor(model => model.ThisTicket.Owner.DisplayName)</p>
-            <p>Assigned To: @Html.DisplayFor(model => model.ThisTicket.AssignedTo.DisplayName)</p>
-            @if (Model.ThisTicket.MediaURL != null)
-            {
-                
+        <div class="col-md-8">
+            <div class="well">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Description</div>
+                    <div class="panel-body">
+                        @Html.DisplayFor(model => model.ThisTicket.Description)
+                    </div>
+                </div>
+                @if (Model.ThisTicket.MediaURL != null)
+                {
+
                     <img class="img-responsive" src="@Model.ThisTicket.MediaURL" alt="" />
                     <hr />
-              
-            }
 
+                }
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="panel panel-danger">
+                <div class="panel-heading">Priority</div>
+                <div class="panel-body">
+                    @Html.DisplayFor(model => model.ThisTicket.Priority.Name)
+                </div>
+            </div>
+            <div class="panel panel-primary">
+                <div class="panel-heading">Status</div>
+                <div class="panel-body">
+                    @Html.DisplayFor(model => model.ThisTicket.Status.Name)
+                </div>
+            </div>
+            <div class="panel panel-success">
+                <div class="panel-heading">Project Name</div>
+                <div class="panel-body">
+                    @Html.DisplayFor(model => model.ThisTicket.Project.Name)
+                </div>
+            </div>
+            <div class="panel panel-info">
+                <div class="panel-heading">Assignment</div>
+                <div class="panel-body">
+                    @Html.DisplayFor(model => model.ThisTicket.AssignedTo.DisplayName)
+                </div>
+            </div>
+            <div class="panel panel-warning">
+                <div class="panel-heading">Type</div>
+                <div class="panel-body">
+                    @Html.DisplayFor(model => model.ThisTicket.TicketType.Name)
+                </div>
+            </div>
         </div>
     </div>
-    @*<dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.ThisTicket.Priority.Name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ThisTicket.Priority.Name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ThisTicket.Project.Name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ThisTicket.Project.Name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ThisTicket.Status.Name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ThisTicket.Status.Name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ThisTicket.TicketType.Name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ThisTicket.TicketType.Name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ThisTicket.Title)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ThisTicket.Title)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ThisTicket.Description)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ThisTicket.Description)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ThisTicket.MediaURL)
-        </dt>
-
-        @if (Model.ThisTicket.MediaURL != null)
-        {
-            <dd>
-                <img class="img-responsive" src="@Model.ThisTicket.MediaURL" alt="" />
-                <hr />
-            </dd>
-        }
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ThisTicket.Created)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ThisTicket.Created)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ThisTicket.Updated)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ThisTicket.Updated)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ThisTicket.OwnerID)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ThisTicket.OwnerID)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ThisTicket.AssignedToID)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ThisTicket.AssignedToID)
-        </dd>
-
-    </dl>*@
 </div>
 <div class="well">
     <h4>Leave a Comment:</h4>
@@ -162,8 +102,8 @@
             </h4>
             @comment.Body
             <div>
-                @if (Model.ThisTicket.MediaURL != null)
-            {
+                @if (comment.MediaURL != null)
+                {
                     <img class="img-responsive" src="@comment.MediaURL" alt="" />
                                 <hr />
                 }

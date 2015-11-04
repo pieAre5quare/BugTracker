@@ -14,9 +14,15 @@ namespace BugTracker.Controllers
     {
         public ApplicationDbContext db = new ApplicationDbContext();
 
+        [Authorize]
         public ActionResult Index()
         {
             var homeModel = new HomeViewModel();
+            homeModel.DevProjectTickets = new List<Tickets>();
+            var userid = User.Identity.GetUserId();
+            homeModel.Notifications = db.Notifications.Where(n => n.NotifiedUserID == userid && n.Acknowledged == false).ToList();
+            
+
             if (User.IsInRole("Admin"))
             {
                 homeModel.Projects = db.Projects.ToList();
@@ -69,6 +75,7 @@ namespace BugTracker.Controllers
         }
         // Post
         [HttpPost]
+        [Authorize]
         public ActionResult EditUser(string[] selectedRoles, AdminUserViewModel model)
         {
             var rolesBeforeAdd = model.User.Id.ListUserRoles();
@@ -92,6 +99,12 @@ namespace BugTracker.Controllers
             return View(db.Users.ToList());
         }
 
-        
+        public ActionResult Acknowledge(int id)
+        {
+            var notification = db.Notifications.Find(id);
+            notification.Acknowledged = true;
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
     }
 }

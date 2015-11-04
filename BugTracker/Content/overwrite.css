@@ -5,3 +5,15 @@
 .navbar-right {
     margin-right: 15px;
 }
+
+.ticket-description {
+    width: 30em
+}
+
+.logout-partial {
+    color: lightgrey;
+}
+
+.logout-partial:hover {
+    color: white;
+}

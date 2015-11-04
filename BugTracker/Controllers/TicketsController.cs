@@ -18,6 +18,7 @@ namespace BugTracker.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Tickets
+        [Authorize(Roles ="Admin")]
         public ActionResult Index()
         {
             var tickets = db.Tickets.Include(t => t.Priority).Include(t => t.Project).Include(t => t.Status).Include(t => t.TicketType);
@@ -126,19 +127,37 @@ namespace BugTracker.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Title,Description,MediaURL,Created,Updated,ProjectID,TicketTypeID,TicketPrioritiesID,TicketStatusesID,OwnerID,AssignedToID")] Tickets tickets)
+        [Authorize]
+        public ActionResult Edit([Bind(Include = "ID,Title,Description,MediaURL,Created,Updated,ProjectID,TicketTypeID,TicketPrioritiesID,TicketStatusesID,OwnerID,AssignedToID")] Tickets ticket, HttpPostedFileBase image)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(tickets).State = EntityState.Modified;
+                if (image != null && image.ContentLength > 0)
+                {
+                    var ext = Path.GetExtension(image.FileName).ToLower();
+                    if (ext != ".png" && ext != ".jpg" && ext != ".jpeg" && ext != ".gif" && ext != ".bmp")
+                    {
+                        ModelState.AddModelError("image", "Invalid Format");
+                    }
+                }
+                if (image != null)
+                {
+                    var filePath = "/Uploads/";
+                    var absPath = Server.MapPath("~" + filePath);
+                    ticket.MediaURL = filePath + image.FileName;
+                    Directory.CreateDirectory(absPath);
+                    image.SaveAs(Path.Combine(absPath, image.FileName));
+                }
+                ticket.CreateHistory(User.Identity.GetUserId());
+                db.Entry(ticket).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.TicketPrioritiesID = new SelectList(db.Priorities, "ID", "Name", tickets.TicketPrioritiesID);
-            ViewBag.ProjectID = new SelectList(db.Projects, "ID", "Name", tickets.ProjectID);
-            ViewBag.TicketStatusesID = new SelectList(db.Statuses, "ID", "Name", tickets.TicketStatusesID);
-            ViewBag.TicketTypeID = new SelectList(db.Types, "ID", "Name", tickets.TicketTypeID);
-            return View(tickets);
+            ViewBag.TicketPrioritiesID = new SelectList(db.Priorities, "ID", "Name", ticket.TicketPrioritiesID);
+            ViewBag.ProjectID = new SelectList(db.Projects, "ID", "Name", ticket.ProjectID);
+            ViewBag.TicketStatusesID = new SelectList(db.Statuses, "ID", "Name", ticket.TicketStatusesID);
+            ViewBag.TicketTypeID = new SelectList(db.Types, "ID", "Name", ticket.TicketTypeID);
+            return View(ticket);
         }
 
         // GET: Tickets/Delete/5
@@ -200,6 +219,17 @@ namespace BugTracker.Controllers
                     Directory.CreateDirectory(absPath);
                     image.SaveAs(Path.Combine(absPath, image.FileName));
                 }
+                new EmailService().SendAsync(new IdentityMessage()
+                {
+                    Destination = ticket.AssignedTo.Email,
+                    Subject = "Comment Notification for " + ticket.Title,
+                    Body = User.Identity.Name + " added: " + newComment.Body
+                });
+                TicketNotifications notification = new TicketNotifications();
+                notification.NotifiedUserID = ticket.AssignedToID;
+                notification.TicketID = ticket.ID;
+                notification.Property = "Comment";
+                db.Notifications.Add(notification);
                 newComment.Created = System.DateTimeOffset.Now;
                 newComment.AuthorID = User.Identity.GetUserId();
                 db.Comments.Add(newComment);

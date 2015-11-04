@@ -6,7 +6,13 @@
 
 
 <form action="@Url.Action("EditUser")" method="post">
-    @Html.ListBox("SelectedRoles", Model.Roles)
+    @Html.ListBox("SelectedRoles", Model.Roles, new { @id="my-select"})
     @Html.HiddenFor(Model => Model.User.Id)
     <button type="submit" class="btn btn-primary">Submit</button>
 </form>
+
+@section scripts{
+    <script type="text/javascript">
+    $('#my-select').multiSelect();
+    </script>
+} 

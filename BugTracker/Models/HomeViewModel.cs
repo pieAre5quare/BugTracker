@@ -10,5 +10,6 @@ namespace BugTracker.Models
         public IEnumerable<Projects> Projects { get; set; }
         public IEnumerable<Tickets> Tickets { get; set; }
         public IEnumerable<Tickets> DevProjectTickets { get; set; }
+        public IEnumerable<TicketNotifications> Notifications { get; set; }
     }
 }

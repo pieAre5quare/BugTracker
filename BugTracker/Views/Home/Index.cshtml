@@ -39,7 +39,7 @@
                                     <a href="#incomeOnline" aria-controls="incomeOnline" role="tab" data-toggle="tab">
                                         <div class="overview-tab clearfix">
                                             <div class="tab-icon">
-                                                <i class="fa fa-dollar"></i>
+                                                <i class="fa fa-suitcase"></i>
                                             </div>
                                             <div class="tab-details">
                                                 <p>Projects</p>
@@ -55,7 +55,7 @@
                                     <a href="#returnOnline" aria-controls="returnOnline" role="tab" data-toggle="tab">
                                         <div class="overview-tab clearfix">
                                             <div class="tab-icon">
-                                                <i class="fa fa-undo"></i>
+                                                <i class="fa fa-database"></i>
                                             </div>
                                             <div class="tab-details">
                                                 <p>Project Tickets</p>
@@ -70,7 +70,7 @@
                             <div class="tab-content">
                                 <div role="tabpanel" class="tab-pane active" id="tickets">
                                     <div class="row">
-                                        <div class="col-md-9 col-sm-9 col-xs-12">
+                                        <div class="col-xs-12">
                                             <table class="indexTable">
                                                 <thead>
                                                     <tr>
@@ -125,7 +125,7 @@
                                
                                 <div role="tabpanel" class="tab-pane" id="incomeOnline">
                                     <div class="row">
-                                        <div class="col-md-8 col-sm-8 col-xs-12">
+                                        <div class="col-xs-12">
                                             @Html.ActionLink("Create New","Create", "Project")
                                             <table class="indexTable">
                                                 <thead>
@@ -166,7 +166,7 @@
                                 {
                                 <div role="tabpanel" class="tab-pane" id="returnOnline">
                                     <div class="row">
-                                        <div class="col-md-8 col-sm-8 col-xs-12">
+                                        <div class="col-xs-12">
                                             <table class="indexTable">
                                                 <thead>
                                                     <tr>
@@ -217,11 +217,60 @@
                 </div>
             </div>
             <!-- Row End -->
+            <!-- Row Start -->
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="widget">
+                        <div class="widget-header">
+                            <div class="title">
+                                Notifications
+                            </div>
+                        </div>
+                        <div class="widget-body">
+
+                            <!-- Row starts -->
+                            <table class="indexTable">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            Ticket Title
+                                        </th>
+                                        <th>
+                                            Changed Property
+                                        </th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (Model.Notifications != null)
+                                    {
+                                        foreach (var item in Model.Notifications)
+                                        {
+
+                                            <tr>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Ticket.Title)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Property)
+                                                </td>
+                                                <td>
+                                                    @Html.ActionLink("Acknowledge", "Acknowledge", new { id = item.ID}, new { @class="btn-primary"})
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+
+                            <!-- Row ends -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Row End -->
         </div>
         <!-- Dashboard Wrapper End -->
-        <footer>
-            <p>© Allan Clark 2015</p>
-        </footer>
     </div>
 </div>
 <!-- Main Container end -->

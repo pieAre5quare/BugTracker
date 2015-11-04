@@ -31,7 +31,7 @@
 
         <div class="form-group">
             <div class="col-md-10">
-                @Html.ListBox("SelectedUsers", Model.Users)
+                @Html.ListBox("SelectedUsers", Model.Users, new { @id= "my-select" })
             </div>
         </div>
 
@@ -46,3 +46,8 @@
     <div>
         @Html.ActionLink("Back to List", "Index")
     </div>
+@section scripts{
+<script type="text/javascript">
+    $('#my-select').multiSelect();
+</script>
+    } 

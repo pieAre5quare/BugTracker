@@ -65,7 +65,9 @@
                     @Html.DisplayFor(modelItem => item.Title)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Description)
+                    <div class="wrapper ticket-description">
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </div>
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Created)
@@ -97,4 +99,23 @@
             $('#ticketTable').DataTable();
         })
     </script>
+<script>
+        $(document).ready(function () {
+            $(".wrapper").dotdotdot({
+                /*	The text to add as ellipsis. */
+                ellipsis: '... ',
+
+                /*	How to cut off the text/html: 'word'/'letter'/'children' */
+                wrap: 'word',
+
+                /*	Wrap-option fallback to 'letter' for long words */
+                fallbackToLetter: true,
+
+
+                /*	Optionally set a max-height, if null, the height will be measured. */
+                height: 20
+
+            });
+        });
+</script>
     }
