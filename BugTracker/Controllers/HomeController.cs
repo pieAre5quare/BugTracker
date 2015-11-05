@@ -7,6 +7,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
+using System.Net;
 
 namespace BugTracker.Controllers
 {
@@ -20,6 +21,7 @@ namespace BugTracker.Controllers
             var homeModel = new HomeViewModel();
             homeModel.DevProjectTickets = new List<Tickets>();
             var userid = User.Identity.GetUserId();
+            var user = db.Users.Find(userid);
             homeModel.Notifications = db.Notifications.Where(n => n.NotifiedUserID == userid && n.Acknowledged == false).ToList();
             
 
@@ -29,19 +31,20 @@ namespace BugTracker.Controllers
                 homeModel.Tickets = db.Tickets.Where(t => t.TicketStatusesID == 1).ToList();
             } else if (User.IsInRole("Project Manager"))
             {
-                var user = db.Users.Find(User.Identity.GetUserId());
+                
                 homeModel.Tickets = user.Project.SelectMany(p => p.Tickets).ToList();
                 homeModel.Projects = user.Project.ToList();
+                homeModel.DevProjectTickets = user.Project.SelectMany(p => p.Tickets).ToList();
             }
             else if (User.IsInRole("Developer"))
             {
-                var user = db.Users.Find(User.Identity.GetUserId());
+                
                 homeModel.Projects = user.Project.ToList();
                 homeModel.Tickets = db.Tickets.Where(t => t.AssignedToID.Equals(user.Id)).ToList();
                 homeModel.DevProjectTickets = user.Project.SelectMany(p => p.Tickets).ToList();
             } else if (User.IsInRole("Submitter"))
             {
-                var user = db.Users.Find(User.Identity.GetUserId());
+                
                 homeModel.Tickets = db.Tickets.Where(t => t.OwnerID.Equals(user.Id)).ToList();
             }
 
@@ -62,16 +65,19 @@ namespace BugTracker.Controllers
             return View();
         }
         //Get
-        public ActionResult EditUser(string id)
+        public ActionResult EditRoles(string id)
         {
-            
+
+            if (string.IsNullOrWhiteSpace(id))
+                return new HttpStatusCodeResult(HttpStatusCode.OK);
+
             var user = db.Users.Find(id);
             AdminUserViewModel AdminModel = new AdminUserViewModel();
             var selected = id.ListUserRoles();
             AdminModel.Roles = new MultiSelectList(db.Roles, "Name", "Name", selected);
             AdminModel.User = user;
 
-            return View(AdminModel);
+            return PartialView(AdminModel);
         }
         // Post
         [HttpPost]

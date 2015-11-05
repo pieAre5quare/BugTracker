@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace BugTracker.Models
 {
@@ -10,6 +11,7 @@ namespace BugTracker.Models
     {
         public int ID { get; set; }
         [Required]
+        [AllowHtml]
         public string Body { get; set; }
         [DisplayFormat(DataFormatString = "{0:MMM dd yyyy hh:mm tt}")]
         public DateTimeOffset Created { get; set; }

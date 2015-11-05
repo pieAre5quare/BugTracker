@@ -34,9 +34,6 @@
                 @Html.DisplayNameFor(model => model.Created)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Updated)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.Owner)
             </th>
             <th>
@@ -66,14 +63,11 @@
                 </td>
                 <td>
                     <div class="wrapper ticket-description">
-                        @Html.DisplayFor(modelItem => item.Description)
+                        @Html.Raw(item.Description)
                     </div>
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Created)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Updated)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Owner.DisplayName)

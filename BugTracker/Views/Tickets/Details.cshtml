@@ -7,119 +7,181 @@
 
 
 <div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-4 col-md-offset-5">
+                <h2>@Html.DisplayFor(model => model.ThisTicket.Title)</h2>
+                <p>Created: @Html.DisplayFor(model => model.ThisTicket.Created)<p>
+                    @if (Model.ThisTicket.Updated != null)
+                    {
 
-    <h2>@Html.DisplayFor(model => model.ThisTicket.Title)</h2>
-    <p>Created: @Html.DisplayFor(model => model.ThisTicket.Created)<p>
-        @if (Model.ThisTicket.Updated != null)
-        {
-            
-            <p>Updated: @Html.DisplayFor(model => model.ThisTicket.Updated)</p>
-        }
-        <p>Author: @Html.DisplayFor(model => model.ThisTicket.Owner.DisplayName)</p>
-    
-    <hr />
+                    <p>Updated: @Html.DisplayFor(model => model.ThisTicket.Updated)</p>
+                    }
+                    <p>Author: @Html.DisplayFor(model => model.ThisTicket.Owner.DisplayName)</p>
+                </div>
+                <div class="col-md-3 text-right">
+                    @if (User.IsInRole("Admin") || User.IsInRole("Project Manager") && Model.IsUserOnTicketProject
+|| User.IsInRole("Developer") && Model.IsAssignedUser || User.IsInRole("Submitter") && Model.IsUserOwner)
+                    {
+                        @Html.ActionLink("Edit", "Edit", new { id = Model.ThisTicket.ID }, new { @class = "btn btn-default" })
+                    }
+                    @Html.ActionLink("Back to List", "Index", "", new { @class = "btn btn-default" })
 
-    <div  class="row">
-        <div class="col-md-8">
-            <div class="well">
-                <div class="panel panel-default">
-                    <div class="panel-heading">Description</div>
-                    <div class="panel-body">
-                        @Html.DisplayFor(model => model.ThisTicket.Description)
+                </div>
+            </div>
+            <hr />
+        </div>
+
+        <div class="row">
+            <div class="col-md-8">
+                <div class="well">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Description</div>
+                        <div class="panel-body">
+                            @Html.Raw(Model.ThisTicket.Description)
+                        </div>
+                    </div>
+                    @if (Model.ThisTicket.MediaURL != null)
+                    {
+
+                        <img class="img-responsive" src="@Model.ThisTicket.MediaURL" alt="" />
+                        <hr />
+
+                    }
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel-group" id="accordion">
+                            <div class="panel panel-default text-center">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">Comments</a>
+                                    </h4>
+                                </div>
+                                <div id="collapse1" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <div class="well">
+                                            <h4>Leave a Comment:</h4>
+                                            <form action="@Url.Action("AddComment", "Tickets")" method="post" enctype="multipart/form-data">
+                                                @Html.AntiForgeryToken()
+                                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                                <input type="hidden" name="TicketID" value="@Model.ThisTicket.ID" />
+                                                <div class="form-group">
+                                                    <div class="col-md-offset-5">
+                                                        <textarea class="form-control" name="Body" rows="3"></textarea>
+                                                        <input name="image" type="file" class="form-control" id="fileUpload" />
+                                                    </div>
+                                                </div>
+                                                @if (User.IsInRole("Admin") || User.IsInRole("Project Manager") && Model.IsUserOnTicketProject
+|| User.IsInRole("Developer") && Model.IsAssignedUser || User.IsInRole("Submitter") && Model.IsUserOwner)
+                                                {
+
+                                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                                }
+                                            </form>
+                                        </div>
+                                        @foreach (var comment in Model.ThisTicket.Comments)
+                                        {
+
+                                            <div class="media">
+                                                <div class="media-body">
+                                                    <h4 class="media-heading">
+                                                        @comment.Author.DisplayName
+                                                        <small>@comment.Created</small>
+                                                    </h4>
+                                                    @comment.Body
+                                                    <div class="col-md-offset-5 pic-container">
+                                                        @if (comment.MediaURL != null)
+                                                        {
+                                                            <img class="img-responsive pic" src="@comment.MediaURL" alt="" height="100" width="100" />
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <hr />
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel panel-default text-center">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">Histories</a>
+                                    </h4>
+                                </div>
+                                <div id="collapse2" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        @foreach (var history in Model.ThisTicket.History)
+                                        {
+
+                                            <div class="media">
+                                                <div class="media-body">
+                                                    <h4 class="media-heading">
+                                                        @Html.DisplayFor(m => history.Property)
+                                                    </h4>
+                                                    <div>
+                                                        <small>Changer: @Html.DisplayFor(m => history.Changer.DisplayName)</small>
+                                                        <small>Date: @Html.DisplayFor(m => history.Changed)</small>
+                                                    </div>
+                                                    <div>
+                                                        Old Value: @Html.DisplayFor(m => history.OldValue)
+                                                    </div>
+                                                    <div>
+                                                        New Value: @Html.DisplayFor(m => history.NewValue)
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <hr />
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                @if (Model.ThisTicket.MediaURL != null)
-                {
-
-                    <img class="img-responsive" src="@Model.ThisTicket.MediaURL" alt="" />
-                    <hr />
-
-                }
             </div>
-        </div>
-        <div class="col-md-4">
-            <div class="panel panel-danger">
-                <div class="panel-heading">Priority</div>
-                <div class="panel-body">
-                    @Html.DisplayFor(model => model.ThisTicket.Priority.Name)
+            <div class="col-md-4">
+                <div class="panel panel-danger">
+                    <div class="panel-heading">Priority</div>
+                    <div class="panel-body">
+                        @Html.DisplayFor(model => model.ThisTicket.Priority.Name)
+                    </div>
                 </div>
-            </div>
-            <div class="panel panel-primary">
-                <div class="panel-heading">Status</div>
-                <div class="panel-body">
-                    @Html.DisplayFor(model => model.ThisTicket.Status.Name)
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Status</div>
+                    <div class="panel-body">
+                        @Html.DisplayFor(model => model.ThisTicket.Status.Name)
+                    </div>
                 </div>
-            </div>
-            <div class="panel panel-success">
-                <div class="panel-heading">Project Name</div>
-                <div class="panel-body">
-                    @Html.DisplayFor(model => model.ThisTicket.Project.Name)
+                <div class="panel panel-success">
+                    <div class="panel-heading">Project Name</div>
+                    <div class="panel-body">
+                        @Html.DisplayFor(model => model.ThisTicket.Project.Name)
+                    </div>
                 </div>
-            </div>
-            <div class="panel panel-info">
-                <div class="panel-heading">Assignment</div>
-                <div class="panel-body">
-                    @Html.DisplayFor(model => model.ThisTicket.AssignedTo.DisplayName)
+                <div class="panel panel-info">
+                    <div class="panel-heading">Assignment</div>
+                    <div class="panel-body">
+                        @Html.DisplayFor(model => model.ThisTicket.AssignedTo.DisplayName)
+                    </div>
                 </div>
-            </div>
-            <div class="panel panel-warning">
-                <div class="panel-heading">Type</div>
-                <div class="panel-body">
-                    @Html.DisplayFor(model => model.ThisTicket.TicketType.Name)
+                <div class="panel panel-warning">
+                    <div class="panel-heading">Type</div>
+                    <div class="panel-body">
+                        @Html.DisplayFor(model => model.ThisTicket.TicketType.Name)
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-<div class="well">
-    <h4>Leave a Comment:</h4>
-    <form action="@Url.Action("AddComment", "Tickets")" method="post" enctype="multipart/form-data">
-        @Html.AntiForgeryToken()
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <input type="hidden" name="TicketID" value="@Model.ThisTicket.ID" />
-        <div class="form-group">
-            <textarea class="form-control" name="Body" rows="3"></textarea>
-            <div class="col-md-10">
-                <input name="image" type="file" class="form-control" id="fileUpload" />
-            </div>
-        </div>
-        @if (User.IsInRole("Admin") || User.IsInRole("Project Manager") && Model.IsUserOnTicketProject
-            || User.IsInRole("Developer") && Model.IsAssignedUser || User.IsInRole("Submitter") && Model.IsUserOwner)
-        {
 
-        <button type="submit" class="btn btn-primary">Submit</button>
-        }
-    </form>
-</div>
-@foreach (var comment in Model.ThisTicket.Comments)
-            {
-                    <!-- Comment -->
-    <div class="media">
-        <div class="media-body">
-            <h4 class="media-heading">
-                @comment.Author.DisplayName
-                <small>@comment.Created</small>
-            </h4>
-            @comment.Body
-            <div>
-                @if (comment.MediaURL != null)
-                {
-                    <img class="img-responsive" src="@comment.MediaURL" alt="" />
-                                <hr />
-                }
-            </div>
-        </div>
-        @*<div>
-            @if (User.IsInRole("Admin") || User.IsInRole("Moderator"))
-            {
+    
 
-                <a href="" data-toggle="modal" data-target="#delete-modal" class="btn btn-primary del" data-comment-id="@comment.ID">Delete</a>
-                                    <a href="" data-toggle="modal" data-target="#edit-modal" class="btn btn-primary edit" data-comment-id="@comment.ID" data-comment-body="@comment.Body">Edit</a>
-            }
-        </div>*@
-    </div>
-}
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ThisTicket.ID }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+
+    @section scripts{
+        <script>
+            $('.pic-container').on('click', '.pic', function () {
+                window.open($(this).attr('src'));
+            });
+        </script>
+    }

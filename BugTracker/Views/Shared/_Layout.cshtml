@@ -23,29 +23,35 @@
 <body>
     <!-- Top Nav Start -->
     <div id='cssmenu'>
-    
+    @{ 
+        
+    }
         <ul>
-            <li class='active'>
+            <li class="hidden-sm @if(Html.IsCurrentAction("Home", "Index")){
+                <text>active</text>}">
                 <a href="@Url.Action("Index", "Home")"><i class="fa fa-dashboard"></i>Dashboards</a>
             </li>
             
             
             @if (User.IsInRole("Admin"))
             {
-                <li class="hidden-sm">
+                <li class="hidden-sm @if(Html.IsCurrentAction("Home", "SelectUser")){
+                <text>active</text>}">
                     <a href="@(Url.Action("SelectUser", "Home"))">
                         <i class="fa fa-cog"></i>
                         Edit Roles
                     </a>
                 </li>
-                <li class="hidden-sm">
+                <li class="hidden-sm @if(Html.IsCurrentAction("Tickets", "Index")){
+                <text>active</text>}">
                     <a href="@(Url.Action("Index", "Tickets"))">
                         <i class="fa fa-ticket"></i>
                         All Tickets
                     </a>
                 </li>
             }
-            <li class="hidden-sm">
+            <li class="hidden-sm @if(Html.IsCurrentAction("Tickets", "Create")){
+                <text>active</text>}">
                 <a href="@(Url.Action("Create", "Tickets"))">
                     <i class="fa fa-align-justify"></i>
                     Create Ticket

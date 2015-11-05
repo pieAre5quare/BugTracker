@@ -28,43 +28,42 @@
                                             <div class="tab-details">
                                                 <p>My Tickets</p>
                                                 <h4>@Model.Tickets.Count()</h4>
-                                                @*<p>200% of total</p>*@
                                             </div>
                                         </div>
                                     </a>
                                 </li>
                                 @if (!User.IsInRole("Submitter"))
                                 {
-                                <li role="presentation">
-                                    <a href="#incomeOnline" aria-controls="incomeOnline" role="tab" data-toggle="tab">
-                                        <div class="overview-tab clearfix">
-                                            <div class="tab-icon">
-                                                <i class="fa fa-suitcase"></i>
+                                    <li role="presentation">
+                                        <a href="#incomeOnline" aria-controls="incomeOnline" role="tab" data-toggle="tab">
+                                            <div class="overview-tab clearfix">
+                                                <div class="tab-icon">
+                                                    <i class="fa fa-suitcase"></i>
+                                                </div>
+                                                <div class="tab-details">
+                                                    <p>Projects</p>
+                                                    <h4>@Model.Projects.Count()</h4>
+                                                </div>
                                             </div>
-                                            <div class="tab-details">
-                                                <p>Projects</p>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </li>
+                                        </a>
+                                    </li>
                                 }
-                                @if (User.IsInRole("Developer"))
+                                @if (User.IsInRole("Developer") || User.IsInRole("Project Manager"))
                                 {
 
-                                <li role="presentation">
-                                    <a href="#returnOnline" aria-controls="returnOnline" role="tab" data-toggle="tab">
-                                        <div class="overview-tab clearfix">
-                                            <div class="tab-icon">
-                                                <i class="fa fa-database"></i>
+                                    <li role="presentation">
+                                        <a href="#returnOnline" aria-controls="returnOnline" role="tab" data-toggle="tab">
+                                            <div class="overview-tab clearfix">
+                                                <div class="tab-icon">
+                                                    <i class="fa fa-database"></i>
+                                                </div>
+                                                <div class="tab-details">
+                                                    <p>Project Tickets</p>
+                                                    <h4>@Model.DevProjectTickets.Count()</h4>
+                                                </div>
                                             </div>
-                                            <div class="tab-details">
-                                                <p>Project Tickets</p>
-                                                <h4>@Model.DevProjectTickets.Count()</h4>
-                                                @*<p>7% of total</p>*@
-                                            </div>
-                                        </div>
-                                    </a>
-                                </li>
+                                        </a>
+                                    </li>
                                 }
                             </ul>
                             <div class="tab-content">
@@ -114,6 +113,10 @@
                                                                     @Html.ActionLink("Details", "Details", "Tickets", new { id = item.ID }, new { }) |
                                                                     @Html.ActionLink("Delete", "Delete", "Tickets", new { id = item.ID }, new { })
                                                                 </td>
+                                                            } else {
+                                                                <td>
+                                                                    @Html.ActionLink("Details", "Details", "Tickets", new { id = item.ID }, new { })
+                                                                </td>
                                                             }
                                                         </tr>
                                                     }
@@ -122,11 +125,13 @@
                                         </div>
                                     </div>
                                 </div>
-                               
+
                                 <div role="tabpanel" class="tab-pane" id="incomeOnline">
                                     <div class="row">
+                                        <div class="col-xs-12 create-project">
+                                            @Html.ActionLink("Create New", "Create", "Project", new { @class = "btn btn-primary" })
+                                        </div>
                                         <div class="col-xs-12">
-                                            @Html.ActionLink("Create New","Create", "Project")
                                             <table class="indexTable">
                                                 <thead>
                                                     <tr>
@@ -153,6 +158,9 @@
                                                                         @Html.ActionLink("Details", "Details", "Projects", new { id = item.ID }, new { }) |
                                                                         @Html.ActionLink("Delete", "Delete", "Projects", new { id = item.ID }, new { })
                                                                     </td>
+                                                                } else
+                                                                {
+                                                                    <td></td>
                                                                 }
                                                             </tr>
                                                         }
@@ -164,52 +172,52 @@
                                 </div>
                                 @if (User.IsInRole("Developer"))
                                 {
-                                <div role="tabpanel" class="tab-pane" id="returnOnline">
-                                    <div class="row">
-                                        <div class="col-xs-12">
-                                            <table class="indexTable">
-                                                <thead>
-                                                    <tr>
-                                                        <th>
-                                                            Title
-                                                        </th>
-                                                        <th>
-                                                            Ticket Status
-                                                        </th>
-                                                        <th>
-                                                            Ticket Priority
-                                                        </th>
-                                                        <th>
-                                                            Project
-                                                        </th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @if (Model.DevProjectTickets != null)
-                                                    {
-                                                        foreach (var item in Model.DevProjectTickets)
-                                                        {
+                                    <div role="tabpanel" class="tab-pane" id="returnOnline">
+                                        <div class="row">
+                                            <div class="col-xs-12">
+                                                <table class="indexTable">
+                                                    <thead>
                                                         <tr>
-                                                            <td>
-                                                                @Html.DisplayFor(modelItem => item.Title)
-                                                            </td>
-                                                            <td>
-                                                                @Html.DisplayFor(modelItem => item.Status.Name)
-                                                            </td>
-                                                            <td>
-                                                                @Html.DisplayFor(modelItem => item.Priority.Name)
-                                                            </td>
-                                                            <td>
-                                                                @Html.DisplayFor(modelItem => item.Project.Name)
-                                                            </td>
+                                                            <th>
+                                                                Title
+                                                            </th>
+                                                            <th>
+                                                                Ticket Status
+                                                            </th>
+                                                            <th>
+                                                                Ticket Priority
+                                                            </th>
+                                                            <th>
+                                                                Project
+                                                            </th>
                                                         </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @if (Model.DevProjectTickets != null)
+                                                        {
+                                                            foreach (var item in Model.DevProjectTickets)
+                                                            {
+                                                                <tr>
+                                                                    <td>
+                                                                        @Html.DisplayFor(modelItem => item.Title)
+                                                                    </td>
+                                                                    <td>
+                                                                        @Html.DisplayFor(modelItem => item.Status.Name)
+                                                                    </td>
+                                                                    <td>
+                                                                        @Html.DisplayFor(modelItem => item.Priority.Name)
+                                                                    </td>
+                                                                    <td>
+                                                                        @Html.DisplayFor(modelItem => item.Project.Name)
+                                                                    </td>
+                                                                </tr>
+                                                            }
                                                         }
-                                                    }
-                                                </tbody>
-                                            </table>
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
                                 }
                             </div>
                         </div>
@@ -255,7 +263,7 @@
                                                     @Html.DisplayFor(modelItem => item.Property)
                                                 </td>
                                                 <td>
-                                                    @Html.ActionLink("Acknowledge", "Acknowledge", new { id = item.ID}, new { @class="btn-primary"})
+                                                    @Html.ActionLink("Acknowledge", "Acknowledge", new { id = item.ID }, new { @class = "btn-primary" })
                                                 </td>
                                             </tr>
                                         }

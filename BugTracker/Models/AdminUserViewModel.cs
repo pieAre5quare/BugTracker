@@ -12,5 +12,6 @@ namespace BugTracker.Models
         public ApplicationUser User { get; set; }
         public MultiSelectList Roles { get; set; }
         public string[] SelecetedRoles { get; set; }
+        public IEnumerable<ApplicationUser> AllUsers { get; set; }
     }
 }

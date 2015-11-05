@@ -1,15 +1,54 @@
 ﻿@model IEnumerable<BugTracker.Models.ApplicationUser>
+
 @{
     ViewBag.Title = "SelectUser";
 }
 
 
-<h2>SelectUser</h2>
-    <ul>
-        @foreach (var user in Model)
-        {
-            <li><a href="@Url.Action("EditUser", "Home", new { id = @user.Id })"> @Html.DisplayFor(model => user.DisplayName)</a></li>
-        }
-    </ul>
+
+
+<div class="row">
+    <div class="col-md-12 roles-title">
+        <h2>Select User</h2>
+    </div>
+    <div class="col-md-12 text-center">
+
+        <form action="@Url.Action("EditUser")" method="post">
+            @Html.AntiForgeryToken()
+            <div class="row">
+                
+                <div class="col-md-12">
+                    @Html.DropDownList("userId", new SelectList(Model, "Id", "DisplayName"), "Select a User", new { Id = "user-dropdown" })
+                </div>
+            </div>
+            <div id="roles-partial">
+
+            </div>
+
+        </form>
+        
+    </div>
+</div>
+
+
+
+ @section scripts{
+    <script>
+        $('#user-dropdown').change(function () {
+            var user = $('#user-dropdown').val();
+
+            $('#roles-partial').load('@Url.Action("EditRoles","Home")' + "/" + user,
+                {
+                },
+                function () {
+                    $('#my-select').multiSelect({
+                        selectableHeader: "<div class='custom-header'>Available Roles</div>",
+                        selectionHeader: "<div class='custom-header'>Selected Roles</div>"
+                    });
+                }
+            );
+        });
+    </script>
+}
 
 
