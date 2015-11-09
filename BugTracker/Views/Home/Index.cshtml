@@ -110,8 +110,8 @@
                                                             {
                                                                 <td>
                                                                     @Html.ActionLink("Edit", "Edit", "Tickets", new { id = item.ID }, new { }) |
-                                                                    @Html.ActionLink("Details", "Details", "Tickets", new { id = item.ID }, new { }) |
-                                                                    @Html.ActionLink("Delete", "Delete", "Tickets", new { id = item.ID }, new { })
+                                                                    @Html.ActionLink("Details", "Details", "Tickets", new { id = item.ID }, new { })
+                                                                    
                                                                 </td>
                                                             } else {
                                                                 <td>
@@ -225,6 +225,8 @@
                 </div>
             </div>
             <!-- Row End -->
+            @if (User.IsInRole("Developer"))
+            {
             <!-- Row Start -->
             <div class="row">
                 <div class="col-xs-12">
@@ -263,7 +265,8 @@
                                                     @Html.DisplayFor(modelItem => item.Property)
                                                 </td>
                                                 <td>
-                                                    @Html.ActionLink("Acknowledge", "Acknowledge", new { id = item.ID }, new { @class = "btn-primary" })
+                                                    
+                                                    @Html.ActionLink("Acknowledge", "Acknowledge", new { id = item.ID }, new { @class="btn btn-primary fa fa-check"})
                                                 </td>
                                             </tr>
                                         }
@@ -277,6 +280,7 @@
                 </div>
             </div>
             <!-- Row End -->
+            }
         </div>
         <!-- Dashboard Wrapper End -->
     </div>

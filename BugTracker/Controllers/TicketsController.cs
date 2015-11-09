@@ -92,7 +92,7 @@ namespace BugTracker.Controllers
 
                 db.Tickets.Add(ticket);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index","Home");
             }
 
             ViewBag.TicketPrioritiesID = new SelectList(db.Priorities, "ID", "Name", ticket.TicketPrioritiesID);
@@ -114,9 +114,11 @@ namespace BugTracker.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.TicketPrioritiesID = new SelectList(db.Priorities, "ID", "Name", tickets.TicketPrioritiesID);
+            var priorities = db.Priorities.Where(p => !(p.Name == "To Be Set"));
+            var statuses = db.Statuses.Where(s => !(s.Name == "New"));
+            ViewBag.TicketPrioritiesID = new SelectList(priorities, "ID", "Name", tickets.TicketPrioritiesID);
             ViewBag.ProjectID = new SelectList(db.Projects, "ID", "Name", tickets.ProjectID);
-            ViewBag.TicketStatusesID = new SelectList(db.Statuses, "ID", "Name", tickets.TicketStatusesID);
+            ViewBag.TicketStatusesID = new SelectList(statuses, "ID", "Name", tickets.TicketStatusesID);
             ViewBag.TicketTypeID = new SelectList(db.Types, "ID", "Name", tickets.TicketTypeID);
             ViewBag.AssignedToID = new SelectList("Developer".UsersInRole(), "ID", "DisplayName", tickets.AssignedToID);
             return View(tickets);
@@ -151,7 +153,7 @@ namespace BugTracker.Controllers
                 ticket.CreateHistory(User.Identity.GetUserId());
                 db.Entry(ticket).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Home");
             }
             ViewBag.TicketPrioritiesID = new SelectList(db.Priorities, "ID", "Name", ticket.TicketPrioritiesID);
             ViewBag.ProjectID = new SelectList(db.Projects, "ID", "Name", ticket.ProjectID);
