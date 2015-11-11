@@ -1,4 +1,4 @@
-﻿@model BugTracker.Models.Projects
+﻿@model BugTracker.Models.ProjectsDetailsModel
 
 @{
     ViewBag.Title = "Details";
@@ -7,28 +7,86 @@
 <h2>Details</h2>
 
 <div>
-    <h4>Projects</h4>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
 
-        <dt>
-            Open Tickets
-        </dt>
+        <div class="row">
+            <div class="col-xs-6">
+                <h2>Open Tickets</h2>
+                <table class="indexTable">
+                    <thead>
+                        <tr>
+                            <th>
+                                Title
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.OpenTickets != null)
+                        {
+                            foreach (var ticket in Model.OpenTickets)
+                            {
 
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => ticket.Title)
+                                    </td>
+                                    @if (User.IsInRole("Admin") || User.IsInRole("Project Manager"))
+                                    {
+                                        <td>
 
-        <dd>
-            @Html.DisplayFor(model => model.Tickets.Where(t => t.TicketStatusesID == 2)) 
-        </dd>
+                                            @Html.ActionLink("Details", "Details", "Projects", new { id = ticket.ID }, new { })
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                        <td></td>
+                                    }
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-6">
+                <h2>Project Developers</h2>
+                <table class="indexTable">
+                    <thead>
+                        <tr>
+                            <th>
+                                Display Name
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.OpenTickets != null)
+                        {
+                            foreach (var member in Model.ThisProject.ProjectMembers)
+                            {
 
-    </dl>
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => member.DisplayName)
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ThisProject.ID }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
+
+
+@section scripts{
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $('.indexTable').DataTable();
+        })
+    </script>
+}

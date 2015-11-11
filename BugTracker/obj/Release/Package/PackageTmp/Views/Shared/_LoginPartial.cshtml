@@ -6,11 +6,10 @@
         @Html.AntiForgeryToken()
         
             <div>
-                @*<i class="fa fa-picture-o"></i>*@
-                <a href="@Url.Action("Index","Manage")" title="Manage">@User.Identity.GetUserName()</a>
-                @*@Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })*@
-                @*<i class="fa fa-picture-o"></i>*@
-                <a href="javascript:document.getElementById('logoutForm').submit()">Log off</a>
+                
+                <a href="@Url.Action("Index","Manage")" title="Manage" class="logout-partial">@User.Identity.GetUserName()</a>
+                |
+                <a href="javascript:document.getElementById('logoutForm').submit()" class="logout-partial">Log off</a>
             </div>
         
 

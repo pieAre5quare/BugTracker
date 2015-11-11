@@ -34,9 +34,6 @@
                 @Html.DisplayNameFor(model => model.Created)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Updated)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.Owner)
             </th>
             <th>
@@ -65,13 +62,12 @@
                     @Html.DisplayFor(modelItem => item.Title)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Description)
+                    <div class="wrapper ticket-description">
+                        @Html.Raw(item.Description)
+                    </div>
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Created)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Updated)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Owner.DisplayName)
@@ -81,8 +77,7 @@
                 </td>
                 <td>
                         @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
-                        @Html.ActionLink("Details", "Details", new { id = item.ID }) |
-                        @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                        @Html.ActionLink("Details", "Details", new { id = item.ID })
                 </td>
             </tr>
         }
@@ -97,4 +92,23 @@
             $('#ticketTable').DataTable();
         })
     </script>
+<script>
+        $(document).ready(function () {
+            $(".wrapper").dotdotdot({
+                /*	The text to add as ellipsis. */
+                ellipsis: '... ',
+
+                /*	How to cut off the text/html: 'word'/'letter'/'children' */
+                wrap: 'word',
+
+                /*	Wrap-option fallback to 'letter' for long words */
+                fallbackToLetter: true,
+
+
+                /*	Optionally set a max-height, if null, the height will be measured. */
+                height: 20
+
+            });
+        });
+</script>
     }

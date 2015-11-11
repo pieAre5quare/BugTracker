@@ -4,40 +4,40 @@
     ViewBag.Title = "Edit";
 }
 
-<h2>Edit</h2>
+
 
 <form action="@Url.Action("Edit", "Projects")" method="post">
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h4>Projects</h4>
-        <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.Project.ID) 
         <div class="form-group">
-            @Html.LabelFor(model => model.Project.Name, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            <div class="col-md-12">
                 @if (User.IsInRole("Admin"))
                 {
-                @Html.EditorFor(model => model.Project.Name, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Project.Name, "", new { @class = "text-danger" })
-                } else
-                {
-                    @Html.DisplayFor(model => model.Project.Name)
+                    <div class="col-md-offset-5">
+                        @Html.EditorFor(model => model.Project.Name, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Project.Name, "", new { @class = "text-danger" })
+                    </div>
                 }
-
+                else
+                {
+                    <h4 class="project-name">@Html.DisplayFor(model => model.Project.Name)</h4>
+                }
+                <hr />
             </div>
         </div>
 
         <div class="form-group">
-            <div class="col-md-10">
-                @Html.ListBox("SelectedUsers", Model.Users)
+            <div class="col-md-12 text-center">
+                @Html.ListBox("SelectedUsers", Model.Users, new { @id= "my-select" })
             </div>
         </div>
 
         <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+            <div class="col-md-12 text-center">
+                <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </div>
     </div>
@@ -46,3 +46,11 @@
     <div>
         @Html.ActionLink("Back to List", "Index")
     </div>
+@section scripts{
+<script type="text/javascript">
+    $('#my-select').multiSelect({
+        selectableHeader: "<div class='custom-header'>Available Developers</div>",
+        selectionHeader: "<div class='custom-header'>Selected Developers</div>"
+        });
+</script>
+    } 

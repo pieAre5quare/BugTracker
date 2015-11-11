@@ -18,7 +18,7 @@ namespace BugTracker.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Tickets
-        [Authorize(Roles ="Admin")]
+        [Authorize]
         public ActionResult Index()
         {
             var tickets = db.Tickets.Include(t => t.Priority).Include(t => t.Project).Include(t => t.Status).Include(t => t.TicketType);
@@ -153,7 +153,7 @@ namespace BugTracker.Controllers
                 ticket.CreateHistory(User.Identity.GetUserId());
                 db.Entry(ticket).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Details", "Tickets", new { id = ticket.ID });
             }
             ViewBag.TicketPrioritiesID = new SelectList(db.Priorities, "ID", "Name", ticket.TicketPrioritiesID);
             ViewBag.ProjectID = new SelectList(db.Projects, "ID", "Name", ticket.ProjectID);

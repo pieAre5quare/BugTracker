@@ -40,12 +40,15 @@ namespace BugTracker.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Projects projects = db.Projects.Find(id);
-            if (projects == null)
+            
+            ProjectsDetailsModel model = new ProjectsDetailsModel();
+            model.ThisProject = db.Projects.Find(id);
+            model.OpenTickets = db.Tickets.Where(t => (t.ProjectID == id && t.TicketStatusesID == 2));
+            if (model.ThisProject == null)
             {
                 return HttpNotFound();
             }
-            return View(projects);
+            return View(model);
         }
 
         // GET: Projects/Create
@@ -114,7 +117,7 @@ namespace BugTracker.Controllers
 
                 db.SaveChanges();
 
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Details", "Projects", new { id = projectAndUsers.Project.ID });
             }
             return View(projectAndUsers);
         }

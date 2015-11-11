@@ -5,3 +5,36 @@
 .navbar-right {
     margin-right: 15px;
 }
+
+.ticket-description {
+    width: 30em
+}
+
+.logout-partial {
+    color: lightgrey;
+}
+
+.logout-partial:hover {
+    color: white;
+}
+
+.roles-title, #roles-partial {
+    text-align: center;
+}
+
+.ms-container {
+    width: 50%;
+    margin: 0 auto;
+}
+
+#user-button {
+        margin-top: 20px;
+}
+
+.create-project {
+    padding-bottom:20px;
+}
+
+.project-name{
+    text-align:center;
+}

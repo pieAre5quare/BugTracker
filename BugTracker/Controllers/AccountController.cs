@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using BugTracker.Models;
+using System.Configuration;
 
 namespace BugTracker.Controllers
 {
@@ -91,7 +92,19 @@ namespace BugTracker.Controllers
             }
         }
 
-        //
+        // Admin Guest
+        [AllowAnonymous]
+        public async Task<ActionResult> GuestAdmin()
+        {
+           
+            var email = ConfigurationManager.AppSettings["AdminUser"];
+
+            var admin = UserManager.FindByEmail(email);
+
+            await SignInManager.SignInAsync(admin, true, false);
+
+            return RedirectToAction("Index", "Home");
+        }
         // GET: /Account/VerifyCode
         [AllowAnonymous]
         public async Task<ActionResult> VerifyCode(string provider, string returnUrl, bool rememberMe)

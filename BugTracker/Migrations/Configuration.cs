@@ -134,6 +134,30 @@ namespace BugTracker.Migrations
             userManager.AddToRole(userId, "Admin");
 
 
+            ////Guest account
+            //if (!context.Roles.Any(r => r.Name == "Guest"))
+            //{
+            //    roleManager.Create(new IdentityRole { Name = "Guest" });
+            //}
+
+            
+            //var AdminUser = ConfigurationManager.AppSettings["AdminUser"];
+            //var Passwd = ConfigurationManager.AppSettings["AdminPassword"];
+            //if (!context.Users.Any(u => u.Email == AdminUser))
+            //{
+            //    userManager.Create(new ApplicationUser
+            //    {
+            //        UserName = AdminUser,
+            //        Email = AdminUser,
+            //        FirstName = "Allan",
+            //        LastName = "Clark",
+            //        DisplayName = "aclark"
+            //    }, Passwd);
+            //}
+
+            //var userId = userManager.FindByEmail(AdminUser).Id;
+            //userManager.AddToRole(userId, "Admin");
+
             // Project manager test account
             if (!context.Roles.Any(r => r.Name == "Project Manager"))
             {
