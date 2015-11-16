@@ -105,6 +105,48 @@ namespace BugTracker.Controllers
 
             return RedirectToAction("Index", "Home");
         }
+
+        // PM Guest
+        [AllowAnonymous]
+        public async Task<ActionResult> GuestPM()
+        {
+
+            var email = ConfigurationManager.AppSettings["PMUser"];
+
+            var admin = UserManager.FindByEmail(email);
+
+            await SignInManager.SignInAsync(admin, true, false);
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        // Dev Guest
+        [AllowAnonymous]
+        public async Task<ActionResult> GuestDev()
+        {
+
+            var email = ConfigurationManager.AppSettings["DevUser"];
+
+            var admin = UserManager.FindByEmail(email);
+
+            await SignInManager.SignInAsync(admin, true, false);
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        // Submitter Guest
+        [AllowAnonymous]
+        public async Task<ActionResult> GuestSub()
+        {
+
+            var email = ConfigurationManager.AppSettings["SubUser"];
+
+            var admin = UserManager.FindByEmail(email);
+
+            await SignInManager.SignInAsync(admin, true, false);
+
+            return RedirectToAction("Index", "Home");
+        }
         // GET: /Account/VerifyCode
         [AllowAnonymous]
         public async Task<ActionResult> VerifyCode(string provider, string returnUrl, bool rememberMe)
