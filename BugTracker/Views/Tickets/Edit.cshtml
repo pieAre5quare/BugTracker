@@ -4,7 +4,21 @@
     ViewBag.Title = "Edit";
 }
 
-<h2>Edit</h2>
+<div class="row">
+    <div class="col-md-12">
+        <div class="col-md-4 col-md-offset-5">
+            <h2>Edit</h2>
+            </div>
+            <div class="col-md-3 text-right">
+                
+                @Html.ActionLink("Back to List", "Index", "", new { @class = "btn btn-default" })
+
+            </div>
+        </div>
+        <hr />
+    </div>
+
+
 <form action="@Url.Action("Edit")" method="post" enctype="multipart/form-data">
 
         @Html.AntiForgeryToken()
@@ -45,30 +59,6 @@
                 </div>
             </div>
 
-            @*<div class="form-group">
-                    @Html.LabelFor(model => model.Created, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => model.Created, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.Created, "", new { @class = "text-danger" })
-                    </div>
-                </div>*@
-
-            @*<div class="form-group">
-                    @Html.LabelFor(model => model.Updated, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => model.Updated, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.Updated, "", new { @class = "text-danger" })
-                    </div>
-                </div>*@
-
-            @*<div class="form-group">
-                    @Html.LabelFor(model => model.ProjectID, "ProjectID", htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.DropDownList("ProjectID", null, htmlAttributes: new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.ProjectID, "", new { @class = "text-danger" })
-                    </div>
-                </div>*@
-
             <div class="form-group">
                 @Html.LabelFor(model => model.TicketTypeID, "TicketTypeID", htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
@@ -95,13 +85,6 @@
                 </div>
             </div>
 
-            @*<div class="form-group">
-                    @Html.LabelFor(model => model.OwnerID, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => model.OwnerID, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.OwnerID, "", new { @class = "text-danger" })
-                    </div>
-                </div>*@
             @if (User.IsInRole("Admin") || User.IsInRole("Project Manager"))
             {
                 <div class="form-group">
@@ -121,9 +104,6 @@
         </div>
     </form>
 
-    <div>
-        @Html.ActionLink("Back to List", "Index")
-    </div>
 
     @section Scripts {
         <script src="~/Scripts/tinymce/tinymce.min.js"></script>

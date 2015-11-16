@@ -92,7 +92,7 @@ namespace BugTracker.Controllers
 
                 db.Tickets.Add(ticket);
                 db.SaveChanges();
-                return RedirectToAction("Index","Home");
+                return RedirectToAction("Details","Tickets", new { id = ticket.ID });
             }
 
             ViewBag.TicketPrioritiesID = new SelectList(db.Priorities, "ID", "Name", ticket.TicketPrioritiesID);

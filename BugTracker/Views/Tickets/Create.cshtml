@@ -4,7 +4,21 @@
     ViewBag.Title = "Create";
 }
 
-<h2>Create</h2>
+<div class="row">
+    <div class="col-md-12">
+        <div class="col-md-4 col-md-offset-5">
+            <h2>Create</h2>
+        </div>
+        <div class="col-md-3 text-right">
+
+            @Html.ActionLink("Back to List", "Index", "", new { @class = "btn btn-default" })
+
+        </div>
+    </div>
+    <hr />
+</div>
+
+
 
 <form action="@Url.Action("Create")" method="post" enctype="multipart/form-data">
     @Html.AntiForgeryToken()
@@ -67,9 +81,6 @@
     </div>
 </form>
 
-    <div>
-        @Html.ActionLink("Back to List", "Index")
-    </div>
 
 @section Scripts {
     <script src="~/Scripts/tinymce/tinymce.min.js"></script>
