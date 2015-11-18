@@ -15,6 +15,7 @@
     <link href="~/Content/new.css" rel="stylesheet" />
     <!-- Important. For Theming change primary-color variable in main.css  -->
     <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/Content/overwrite.css" rel="stylesheet" />
     <!-- HTML5 shiv and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
       <script src="js/html5shiv.js"></script>
@@ -48,6 +49,7 @@
                                     <div class="col-md-12">
                                         <h3>Login</h3>
                                         <p>Fill out the form below to login.</p>
+                                        <hr />
                                     </div>
                                 </div>
                             </div>
@@ -77,11 +79,29 @@
                         }
                     </div>
                 </div>
-                @*<div class="col-md-4 col-md-offset-4">
-                    <div class="sign-in-container">
-                        <a href="@Url.Action("GuestAdmin")" class="btn btn-primary">Guest Admin</a>
+                <div class="col-md-4 col-md-offset-4">
+                    <div class="guest-container">
+                        <div class="header" id="guest-header">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h3>Login with a guest account</h3>
+                                    <hr />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 text-center">
+                                <a href="@Url.Action("GuestAdmin", "Account")" class="btn btn-success guest-button"><i class="fa fa-users"></i> Admin</a>
+                                <a href="@Url.Action("GuestPM", "Account")" class="btn btn-primary guest-button"><i class="fa fa-sitemap"></i> Project Manager</a>
+                            </div>
+                            <div class="col-md-12 text-center">
+                                <a href="@Url.Action("GuestDev", "Account")" class="btn btn-warning guest-button"><i class="fa fa-code"></i> Developer</a>
+                                <a href="@Url.Action("GuestSub", "Account")" class="btn btn-info guest-button"><i class="fa fa-ticket"></i> Submitter</a>
+                            </div>
+                        </div>
+
                     </div>
-                </div>*@
+                </div>
             </div>
             <!-- Row End -->
 

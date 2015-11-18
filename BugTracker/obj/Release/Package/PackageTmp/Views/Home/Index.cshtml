@@ -128,9 +128,12 @@
 
                                 <div role="tabpanel" class="tab-pane" id="incomeOnline">
                                     <div class="row">
+                                        @if (User.IsInRole("Admin"))
+                                        {
                                         <div class="col-xs-12 create-project">
-                                            @Html.ActionLink("Create New", "Create", "Project", new { @class = "btn btn-primary" })
+                                            @Html.ActionLink("Create New", "Create", "Projects", new { }, new { @class = "btn btn-primary" })
                                         </div>
+                                        }
                                         <div class="col-xs-12">
                                             <table class="indexTable">
                                                 <thead>
@@ -248,7 +251,9 @@
                                         <th>
                                             Changed Property
                                         </th>
-                                        <th></th>
+                                        <th>
+                                            Acknowledge
+                                        </th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -265,8 +270,7 @@
                                                     @Html.DisplayFor(modelItem => item.Property)
                                                 </td>
                                                 <td>
-                                                    
-                                                    @Html.ActionLink("Acknowledge", "Acknowledge", new { id = item.ID }, new { @class="btn btn-primary fa fa-check"})
+                                                    <a href="@Url.Action("Acknowledge", "Home", new { id = item.ID })" class="btn btn-primary"><i class="fa fa-check-square-o"></i></a>
                                                 </td>
                                             </tr>
                                         }
