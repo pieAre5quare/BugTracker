@@ -338,7 +338,6 @@
     <Content Include="Scripts\alertify.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="connections.config" />
     <Content Include="private.config" />
     <Content Include="fonts\fontawesome-webfont.eot" />
     <Content Include="fonts\fontawesome-webfont.ttf" />
@@ -348,6 +347,9 @@
     <Content Include="Content\DataTables-1.10.9\media\images\Sorting icons.psd" />
     <Content Include="Content\DataTables-1.10.9\extensions\Buttons\css\mixins.scss" />
     <Content Include="Content\DataTables-1.10.9\extensions\Buttons\css\common.scss" />
+    <Content Include="connections.config">
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="Properties\PublishProfiles\aclark-BugTracker.pubxml" />
     <Content Include="Scripts\DataTables-1.10.9\extensions\AutoFill\js\autoFill.bootstrap.js" />
     <Content Include="Scripts\DataTables-1.10.9\extensions\AutoFill\js\autoFill.bootstrap.min.js" />
